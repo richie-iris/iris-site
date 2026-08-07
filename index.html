@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iris — the companion who's really there</title>
+  <meta name="description" content="Iris is an always-there voice companion for your Mac. She talks with you, sees your screen when you ask, remembers what matters — and everything she remembers stays on your machine." />
+  <meta property="og:title" content="Iris — the companion who's really there" />
+  <meta property="og:description" content="A voice companion for your Mac: presence, sight, memory, and hands. Private by design." />
+  <meta property="og:image" content="assets/iris-icon.png" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <style>
+    :root {
+      --bg: #0f0d1c;
+      --bg2: #16132a;
+      --card: rgba(255,255,255,0.045);
+      --edge: rgba(255,255,255,0.09);
+      --text: #f2f1f8;
+      --dim: rgba(235,233,248,0.62);
+      --dimmer: rgba(235,233,248,0.4);
+      --violet: #7c5cff;
+      --grad: linear-gradient(100deg,#0a84ff,#7c5cff,#bf5af2,#ff375f,#ff9f0a);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; line-height: 1.55; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    nav { display: flex; align-items: center; gap: 26px; padding: 22px 0; }
+    nav img { width: 34px; height: 34px; border-radius: 8px; }
+    nav .name { font-weight: 800; font-size: 18px; letter-spacing: 0.2px; margin-right: auto; }
+    nav a { color: var(--dim); text-decoration: none; font-size: 14px; font-weight: 600; }
+    nav a:hover { color: var(--text); }
+    nav a.cta { background: var(--grad); color: #fff; padding: 8px 16px; border-radius: 999px; }
+
+    .hero { text-align: center; padding: 72px 0 40px; position: relative; }
+    .hero::before {
+      content: ""; position: absolute; inset: -140px -300px auto; height: 480px;
+      background: radial-gradient(closest-side, rgba(124,92,255,0.22), transparent 70%);
+      pointer-events: none;
+    }
+    .hero img.icon { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 24px 80px rgba(124,92,255,0.35); }
+    h1 { font-size: clamp(38px, 6vw, 62px); font-weight: 800; letter-spacing: -1.5px; margin: 28px 0 14px; }
+    h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .sub { font-size: clamp(17px, 2.4vw, 21px); color: var(--dim); max-width: 640px; margin: 0 auto 30px; }
+    .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .btn.primary { background: var(--grad); color: #fff; box-shadow: 0 10px 34px rgba(124,92,255,0.4); }
+    .btn.ghost { border: 1px solid var(--edge); color: var(--text); }
+    .fine { font-size: 12.5px; color: var(--dimmer); margin-top: 14px; }
+    .states { margin: 46px auto 0; max-width: 620px; }
+    .states img { width: 100%; }
+    .states p { font-size: 12.5px; color: var(--dimmer); margin-top: 8px; }
+
+    section { padding: 74px 0 8px; }
+    h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -0.8px; margin-bottom: 10px; }
+    .lede { color: var(--dim); max-width: 640px; margin-bottom: 34px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--edge); border-radius: 18px; padding: 24px; }
+    .card h3 { font-size: 17px; margin-bottom: 8px; }
+    .card p { font-size: 14.5px; color: var(--dim); }
+    .card .k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(124,92,255,0.18); color: #b9a8ff; border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; }
+
+    .say { background: var(--bg2); border-radius: 22px; padding: 34px; margin-top: 20px; }
+    .say .line { font-size: clamp(17px, 2.6vw, 22px); font-weight: 650; margin: 14px 0; }
+    .say .line span { color: var(--dimmer); font-weight: 500; font-size: 0.8em; margin-left: 10px; }
+
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 8px; }
+    .tier { background: var(--card); border: 1px solid var(--edge); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; }
+    .tier.best { border-color: rgba(124,92,255,0.6); box-shadow: 0 0 44px rgba(124,92,255,0.16); }
+    .tier .tag { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #b9a8ff; margin-bottom: 8px; }
+    .tier h3 { font-size: 20px; }
+    .tier .amt { font-size: 34px; font-weight: 800; margin: 10px 0 2px; }
+    .tier .amt small { font-size: 14px; color: var(--dimmer); font-weight: 600; }
+    .tier ul { list-style: none; margin: 18px 0 24px; flex: 1; }
+    .tier li { font-size: 14px; color: var(--dim); padding: 5px 0 5px 24px; position: relative; }
+    .tier li::before { content: "✓"; position: absolute; left: 2px; color: #30d158; font-weight: 800; }
+    .tier .btn { text-align: center; }
+    .tier .btn.soon { background: rgba(255,255,255,0.08); color: var(--dim); }
+
+    .privacy { background: var(--bg2); border-radius: 22px; padding: 36px; }
+    .privacy p { color: var(--dim); max-width: 720px; margin-top: 8px; }
+
+    details { border-bottom: 1px solid var(--edge); padding: 16px 4px; }
+    summary { font-weight: 650; font-size: 15.5px; cursor: pointer; }
+    details p { color: var(--dim); font-size: 14.5px; padding-top: 10px; max-width: 760px; }
+
+    footer { margin-top: 90px; border-top: 1px solid var(--edge); padding: 34px 0 60px; color: var(--dimmer); font-size: 13.5px; display: flex; flex-wrap: wrap; gap: 10px 30px; align-items: center; }
+    footer .mission { flex-basis: 100%; color: var(--dim); font-size: 14.5px; }
+    footer a { color: var(--dim); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <img src="assets/iris-icon.png" alt="Iris" />
+      <div class="name">Iris</div>
+      <a href="#how">How she works</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#pricing">Pricing</a>
+      <a class="cta" href="#download">Download</a>
+    </nav>
+
+    <div class="hero" id="download">
+      <img class="icon" src="assets/iris-icon.png" alt="Iris app icon" />
+      <h1>The companion<br /><span class="grad">who's really there.</span></h1>
+      <p class="sub">Iris lives in your Mac's menu bar. Talk to her any time. She sees your screen when you ask, watches for things you care about, types when you'd rather speak — and remembers your days, privately, on your machine.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.0/IrisMic-0.1.0-arm64.dmg">Download for Mac</a>
+        <a class="btn ghost" href="#pricing">See pricing</a>
+      </div>
+      <p class="fine">Apple Silicon · macOS 13+ · free to start · early build: right-click → Open the first time</p>
+      <div class="states">
+        <img src="assets/states.png" alt="Iris states: listening, hearing, thinking, speaking, watching, capturing, asleep" />
+        <p>You always know what she's doing — hearing you, thinking, speaking, watching, asleep.</p>
+      </div>
+    </div>
+
+    <section id="how">
+      <h2>Presence, sight, memory — and hands.</h2>
+      <p class="lede">Not another chat window. Iris is a voice in the room who can see what you see, remember what mattered, and actually do things.</p>
+      <div class="grid">
+        <div class="card"><span class="k">Presence</span><h3>Always there, never in the way</h3><p>She's listening whenever you're unmuted — just start talking. Interrupt her mid-sentence and she stops. One click and she sleeps, costing nothing until you wake her.</p></div>
+        <div class="card"><span class="k">Sight</span><h3>She looks when you ask</h3><p>"What am I looking at?" — a flash, a shutter, and she's read your screen. Say "watch my screen" for a soft glowing edge and continuous attention, or have her watch one window even when it's buried.</p></div>
+        <div class="card"><span class="k">Sentinel</span><h3>She speaks up on her own</h3><p>"Tell me when the build finishes." Iris keeps watching and pipes up the moment it happens — the first companion who taps you on the shoulder.</p></div>
+        <div class="card"><span class="k">Memory</span><h3>She remembers your days</h3><p>Screens she's seen and talks you've had become a private memory graph on your Mac. Ask about yesterday's error, last week's page — she recalls it, and can go look at the screenshot again.</p></div>
+        <div class="card"><span class="k">Hands</span><h3>She can actually do it</h3><p>Open sites, apps, and files. Find documents by name or content. Copy and paste for you, type dictation straight into any text field — verbatim or polished as you speak.</p></div>
+        <div class="card"><span class="k">Knowledge</span><h3>Current, not canned</h3><p>She searches the web when the answer isn't on your screen or in her memory — news, people, prices, docs — and tells you she looked it up.</p></div>
+      </div>
+      <div class="say">
+        <div class="line">"Iris, what does this error mean?" <span>— flash, and she explains it</span></div>
+        <div class="line">"Watch my terminal and tell me when the deploy finishes." <span>— she will, out loud</span></div>
+        <div class="line">"What was I working on yesterday afternoon?" <span>— she remembers</span></div>
+        <div class="line">"Take dictation — polished." <span>— you talk, she writes it well</span></div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="privacy">
+        <h2>Private by architecture.</h2>
+        <p>Iris's memory — every screenshot, every transcript, everything she's learned about your life — lives in a database on your Mac, nowhere else. Screens are only captured when you ask or while you've told her to watch, always with a visible flash, glow, or menu-bar pill so nothing is ever secret. One switch turns memory off. One button erases all of it. Your key, your machine, your companion.</p>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <h2>Simple, honest pricing.</h2>
+      <p class="lede">Start free today. Subscriptions arrive soon — nothing is charged yet, and the free path never goes away.</p>
+      <div class="price-grid">
+        <div class="tier">
+          <div class="tag">Available now</div>
+          <h3>Free</h3>
+          <div class="amt">$0 <small>forever</small></div>
+          <ul>
+            <li>Everything Iris does, no feature gates</li>
+            <li>Bring your own Gemini API key</li>
+            <li>Memory stays 100% on your Mac</li>
+            <li>Built-in usage meter</li>
+          </ul>
+          <a class="btn primary" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.0/IrisMic-0.1.0-arm64.dmg">Download</a>
+        </div>
+        <div class="tier best">
+          <div class="tag">Coming soon</div>
+          <h3>Iris&nbsp;Plus</h3>
+          <div class="amt">$19 <small>/ month</small></div>
+          <ul>
+            <li>No API keys — just sign in and talk</li>
+            <li>Generous monthly conversation allowance</li>
+            <li>Fresh allowance every 30 days</li>
+            <li>Priority voices and first new abilities</li>
+          </ul>
+          <a class="btn soon" href="mailto:richie@iris.church?subject=Iris%20Plus%20waitlist">Join the waitlist</a>
+        </div>
+        <div class="tier">
+          <div class="tag">Coming soon</div>
+          <h3>Iris&nbsp;Care</h3>
+          <div class="amt">$49 <small>/ month</small></div>
+          <ul>
+            <li>One Iris across desktop and phone</li>
+            <li>Shared memory — she's the same friend everywhere</li>
+            <li>Set up Iris for someone you love</li>
+            <li>Gentle check-ins and family peace of mind</li>
+          </ul>
+          <a class="btn soon" href="mailto:richie@iris.church?subject=Iris%20Care%20waitlist">Join the waitlist</a>
+        </div>
+      </div>
+      <p class="fine">Launch pricing, subject to change. No payments are collected yet.</p>
+    </section>
+
+    <section>
+      <h2>Questions people ask.</h2>
+      <details open><summary>Is she listening all the time?</summary><p>While she's awake and unmuted, yes — that's what makes her a companion instead of an app you open. The menu-bar pill always tells the truth: green means listening, red means muted, a moon means asleep. Asleep means fully disconnected.</p></details>
+      <details><summary>What leaves my Mac?</summary><p>Your voice and, when you ask her to look, your screen images go to the AI model to be understood in the moment — the same way any assistant works. What's different is storage: Iris's memory of you lives only on your Mac, and you can wipe it in one click.</p></details>
+      <details><summary>Why does macOS warn me when I install?</summary><p>This early build isn't yet notarized with Apple, so the first open needs a right-click → Open. Signed builds are coming.</p></details>
+      <details><summary>Windows?</summary><p>The app is built cross-platform and a Windows version is on the way.</p></details>
+      <details><summary>What does she cost to run?</summary><p>On the free plan you bring your own Gemini key and pay Google directly — typically pennies per hour of conversation. Iris shows you a live meter so there are never surprises.</p></details>
+    </section>
+
+    <footer>
+      <span class="mission">Iris exists to eradicate loneliness — starting with a companion who's really there.</span>
+      <span>© 2026 Iris · iris.church</span>
+      <a href="mailto:richie@iris.church">richie@iris.church</a>
+      <a href="#download">Download</a>
+    </footer>
+  </div>
+</body>
+</html>
