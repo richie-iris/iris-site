@@ -9,21 +9,67 @@
   <meta property="og:description" content="A voice companion for your Mac: presence, sight, memory, and hands. Private by design." />
   <meta property="og:image" content="assets/iris-icon.png" />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <script>
+    (function () {
+      var saved = localStorage.getItem('iris-theme');
+      if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+    })();
+  </script>
   <style>
     :root {
-      --bg: #0f0d1c;
-      --bg2: #16132a;
-      --card: rgba(255,255,255,0.045);
-      --edge: rgba(255,255,255,0.09);
-      --text: #f2f1f8;
-      --dim: rgba(235,233,248,0.62);
-      --dimmer: rgba(235,233,248,0.4);
+      /* dark: grey/slate */
+      --bg: #1a1d24;
+      --bg2: #22262f;
+      --card: rgba(255,255,255,0.05);
+      --edge: rgba(255,255,255,0.1);
+      --text: #eef0f4;
+      --dim: rgba(226,230,238,0.66);
+      --dimmer: rgba(226,230,238,0.44);
       --violet: #7c5cff;
+      --chipbg: rgba(124,92,255,0.2);
+      --chiptext: #b9a8ff;
+      --heroGlow: rgba(124,92,255,0.2);
+      --iconShadow: rgba(124,92,255,0.32);
+      --btnShadow: rgba(124,92,255,0.36);
+      --bestGlow: rgba(124,92,255,0.15);
+      --soonBg: rgba(255,255,255,0.08);
       --grad: linear-gradient(100deg,#0a84ff,#7c5cff,#bf5af2,#ff375f,#ff9f0a);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8f4ea;
+        --bg2: #efe9db;
+        --card: #fffdf7;
+        --edge: rgba(70,58,36,0.14);
+        --text: #2b2833;
+        --dim: #605a6e;
+        --dimmer: #8f8899;
+        --chipbg: rgba(108,76,224,0.12);
+        --chiptext: #6c4ce0;
+        --heroGlow: rgba(124,92,255,0.12);
+        --iconShadow: rgba(90,60,200,0.22);
+        --btnShadow: rgba(90,60,200,0.24);
+        --bestGlow: rgba(108,76,224,0.12);
+        --soonBg: rgba(60,50,30,0.08);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #1a1d24; --bg2: #22262f; --card: rgba(255,255,255,0.05); --edge: rgba(255,255,255,0.1);
+      --text: #eef0f4; --dim: rgba(226,230,238,0.66); --dimmer: rgba(226,230,238,0.44);
+      --chipbg: rgba(124,92,255,0.2); --chiptext: #b9a8ff; --heroGlow: rgba(124,92,255,0.2);
+      --iconShadow: rgba(124,92,255,0.32); --btnShadow: rgba(124,92,255,0.36);
+      --bestGlow: rgba(124,92,255,0.15); --soonBg: rgba(255,255,255,0.08);
+    }
+    :root[data-theme="light"] {
+      --bg: #f8f4ea; --bg2: #efe9db; --card: #fffdf7; --edge: rgba(70,58,36,0.14);
+      --text: #2b2833; --dim: #605a6e; --dimmer: #8f8899;
+      --chipbg: rgba(108,76,224,0.12); --chiptext: #6c4ce0; --heroGlow: rgba(124,92,255,0.12);
+      --iconShadow: rgba(90,60,200,0.22); --btnShadow: rgba(90,60,200,0.24);
+      --bestGlow: rgba(108,76,224,0.12); --soonBg: rgba(60,50,30,0.08);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; line-height: 1.55; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; line-height: 1.55; transition: background 0.25s, color 0.25s; }
     .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
     nav { display: flex; align-items: center; gap: 26px; padding: 22px 0; }
     nav img { width: 34px; height: 34px; border-radius: 8px; }
@@ -35,16 +81,16 @@
     .hero { text-align: center; padding: 72px 0 40px; position: relative; }
     .hero::before {
       content: ""; position: absolute; inset: -140px -300px auto; height: 480px;
-      background: radial-gradient(closest-side, rgba(124,92,255,0.22), transparent 70%);
+      background: radial-gradient(closest-side, var(--heroGlow), transparent 70%);
       pointer-events: none;
     }
-    .hero img.icon { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 24px 80px rgba(124,92,255,0.35); }
+    .hero img.icon { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 24px 80px var(--iconShadow); }
     h1 { font-size: clamp(38px, 6vw, 62px); font-weight: 800; letter-spacing: -1.5px; margin: 28px 0 14px; }
     h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .sub { font-size: clamp(17px, 2.4vw, 21px); color: var(--dim); max-width: 640px; margin: 0 auto 30px; }
     .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .btn { display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 700; font-size: 16px; text-decoration: none; }
-    .btn.primary { background: var(--grad); color: #fff; box-shadow: 0 10px 34px rgba(124,92,255,0.4); }
+    .btn.primary { background: var(--grad); color: #fff; box-shadow: 0 10px 34px var(--btnShadow); }
     .btn.ghost { border: 1px solid var(--edge); color: var(--text); }
     .fine { font-size: 12.5px; color: var(--dimmer); margin-top: 14px; }
     .states { margin: 46px auto 0; max-width: 620px; }
@@ -58,7 +104,7 @@
     .card { background: var(--card); border: 1px solid var(--edge); border-radius: 18px; padding: 24px; }
     .card h3 { font-size: 17px; margin-bottom: 8px; }
     .card p { font-size: 14.5px; color: var(--dim); }
-    .card .k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(124,92,255,0.18); color: #b9a8ff; border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; }
+    .card .k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: var(--chipbg); color: var(--chiptext); border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; }
 
     .say { background: var(--bg2); border-radius: 22px; padding: 34px; margin-top: 20px; }
     .say .line { font-size: clamp(17px, 2.6vw, 22px); font-weight: 650; margin: 14px 0; }
@@ -66,8 +112,8 @@
 
     .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 8px; }
     .tier { background: var(--card); border: 1px solid var(--edge); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; }
-    .tier.best { border-color: rgba(124,92,255,0.6); box-shadow: 0 0 44px rgba(124,92,255,0.16); }
-    .tier .tag { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #b9a8ff; margin-bottom: 8px; }
+    .tier.best { border-color: rgba(124,92,255,0.55); box-shadow: 0 0 44px var(--bestGlow); }
+    .tier .tag { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--chiptext); margin-bottom: 8px; }
     .tier h3 { font-size: 20px; }
     .tier .amt { font-size: 34px; font-weight: 800; margin: 10px 0 2px; }
     .tier .amt small { font-size: 14px; color: var(--dimmer); font-weight: 600; }
@@ -75,7 +121,9 @@
     .tier li { font-size: 14px; color: var(--dim); padding: 5px 0 5px 24px; position: relative; }
     .tier li::before { content: "✓"; position: absolute; left: 2px; color: #30d158; font-weight: 800; }
     .tier .btn { text-align: center; }
-    .tier .btn.soon { background: rgba(255,255,255,0.08); color: var(--dim); }
+    .tier .btn.soon { background: var(--soonBg); color: var(--dim); }
+    #themeBtn { background: none; border: 1px solid var(--edge); color: var(--dim); border-radius: 999px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; }
+    #themeBtn:hover { color: var(--text); }
 
     .privacy { background: var(--bg2); border-radius: 22px; padding: 36px; }
     .privacy p { color: var(--dim); max-width: 720px; margin-top: 8px; }
@@ -97,6 +145,7 @@
       <a href="#how">How she works</a>
       <a href="#privacy">Privacy</a>
       <a href="#pricing">Pricing</a>
+      <button id="themeBtn" title="Light / dark" aria-label="Toggle light or dark mode">◐</button>
       <a class="cta" href="#download">Download</a>
     </nav>
 
@@ -201,5 +250,15 @@
       <a href="#download">Download</a>
     </footer>
   </div>
+  <script>
+    document.getElementById('themeBtn').addEventListener('click', function () {
+      var root = document.documentElement;
+      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var current = root.dataset.theme || (systemDark ? 'dark' : 'light');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      localStorage.setItem('iris-theme', next);
+    });
+  </script>
 </body>
 </html>
