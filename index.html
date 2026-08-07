@@ -1,297 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sidekick — talk to what you're looking at</title>
-  <meta name="description" content="Sidekick is the AI who sits behind your screen. Not a chatbot you visit, not an agent that takes the wheel, not a recorder that films everything — eyes when you ask, a voice always, hands on request, memory that stays home." />
-  <meta property="og:title" content="Sidekick — talk to what you're looking at" />
-  <meta property="og:description" content="The AI sidekick beside your screen: eyes on ask, voice always, hands on request, memory at home." />
-  <meta property="og:image" content="https://richie-iris.github.io/iris-site/assets/iris-icon.png" />
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
-  <script>
-    (function () {
-      var saved = localStorage.getItem('iris-theme');
-      if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
-    })();
-  </script>
-  <style>
-    :root {
-      /* dark: grey/slate */
-      --bg: #1a1d24;
-      --bg2: #22262f;
-      --card: rgba(255,255,255,0.05);
-      --edge: rgba(255,255,255,0.1);
-      --text: #eef0f4;
-      --dim: rgba(226,230,238,0.66);
-      --dimmer: rgba(226,230,238,0.44);
-      --violet: #7c5cff;
-      --chipbg: rgba(124,92,255,0.2);
-      --chiptext: #b9a8ff;
-      --heroGlow: rgba(124,92,255,0.2);
-      --iconShadow: rgba(124,92,255,0.32);
-      --btnShadow: rgba(124,92,255,0.36);
-      --bestGlow: rgba(124,92,255,0.15);
-      --soonBg: rgba(255,255,255,0.08);
-      --grad: linear-gradient(100deg,#0a84ff,#7c5cff,#bf5af2,#ff375f,#ff9f0a);
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sidekick — the one who's already looking</title>
+<meta name="description" content="A voice at your desk that can see your screen, remember your days, and do things on your Mac. No tab to open. No context to paste. Everything it remembers stays on your machine." />
+<meta property="og:title" content="Sidekick — the one who's already looking" />
+<meta property="og:description" content="A voice at your desk that sees your screen, remembers your days, and works your Mac. Private by architecture." />
+<meta property="og:image" content="https://richie-iris.github.io/iris-site/assets/sidekick.png" />
+<meta name="theme-color" content="#12131a" />
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<script>(function(){var t=localStorage.getItem('sk-theme');if(t)document.documentElement.dataset.theme=t;})();</script>
+<style>
+  :root{
+    --ink:#12131a; --ink2:#1b1d27; --line:rgba(255,255,255,.09);
+    --fg:#f4f3f0; --fg2:rgba(244,243,240,.62); --fg3:rgba(244,243,240,.38);
+    --amber:#ffb02e; --coral:#ff6a5c; --magenta:#d654dc; --indigo:#6c76ff;
+    --spark:#fffaec;
+    --sheet:rgba(255,255,255,.035);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --ink:#f6f2e9; --ink2:#efe9dc; --line:rgba(40,32,20,.13);
+      --fg:#191720; --fg2:#5b5566; --fg3:#8b8494;
+      --spark:#7a5a00; --sheet:rgba(255,255,255,.7);
     }
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #f8f4ea;
-        --bg2: #efe9db;
-        --card: #fffdf7;
-        --edge: rgba(70,58,36,0.14);
-        --text: #2b2833;
-        --dim: #605a6e;
-        --dimmer: #8f8899;
-        --chipbg: rgba(108,76,224,0.12);
-        --chiptext: #6c4ce0;
-        --heroGlow: rgba(124,92,255,0.12);
-        --iconShadow: rgba(90,60,200,0.22);
-        --btnShadow: rgba(90,60,200,0.24);
-        --bestGlow: rgba(108,76,224,0.12);
-        --soonBg: rgba(60,50,30,0.08);
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg: #1a1d24; --bg2: #22262f; --card: rgba(255,255,255,0.05); --edge: rgba(255,255,255,0.1);
-      --text: #eef0f4; --dim: rgba(226,230,238,0.66); --dimmer: rgba(226,230,238,0.44);
-      --chipbg: rgba(124,92,255,0.2); --chiptext: #b9a8ff; --heroGlow: rgba(124,92,255,0.2);
-      --iconShadow: rgba(124,92,255,0.32); --btnShadow: rgba(124,92,255,0.36);
-      --bestGlow: rgba(124,92,255,0.15); --soonBg: rgba(255,255,255,0.08);
-    }
-    :root[data-theme="light"] {
-      --bg: #f8f4ea; --bg2: #efe9db; --card: #fffdf7; --edge: rgba(70,58,36,0.14);
-      --text: #2b2833; --dim: #605a6e; --dimmer: #8f8899;
-      --chipbg: rgba(108,76,224,0.12); --chiptext: #6c4ce0; --heroGlow: rgba(124,92,255,0.12);
-      --iconShadow: rgba(90,60,200,0.22); --btnShadow: rgba(90,60,200,0.24);
-      --bestGlow: rgba(108,76,224,0.12); --soonBg: rgba(60,50,30,0.08);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; line-height: 1.55; transition: background 0.25s, color 0.25s; }
-    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-    nav { display: flex; align-items: center; gap: 26px; padding: 22px 0; }
-    nav img { width: 34px; height: 34px; border-radius: 8px; }
-    nav .name { font-weight: 800; font-size: 18px; letter-spacing: 0.2px; margin-right: auto; }
-    nav a { color: var(--dim); text-decoration: none; font-size: 14px; font-weight: 600; }
-    nav a:hover { color: var(--text); }
-    nav a.cta { background: var(--grad); color: #fff; padding: 8px 16px; border-radius: 999px; }
+  }
+  :root[data-theme="dark"]{--ink:#12131a;--ink2:#1b1d27;--line:rgba(255,255,255,.09);--fg:#f4f3f0;--fg2:rgba(244,243,240,.62);--fg3:rgba(244,243,240,.38);--spark:#fffaec;--sheet:rgba(255,255,255,.035);}
+  :root[data-theme="light"]{--ink:#f6f2e9;--ink2:#efe9dc;--line:rgba(40,32,20,.13);--fg:#191720;--fg2:#5b5566;--fg3:#8b8494;--spark:#7a5a00;--sheet:rgba(255,255,255,.7);}
 
-    .hero { text-align: center; padding: 72px 0 40px; position: relative; }
-    .hero::before {
-      content: ""; position: absolute; inset: -140px -300px auto; height: 480px;
-      background: radial-gradient(closest-side, var(--heroGlow), transparent 70%);
-      pointer-events: none;
-    }
-    .hero img.icon { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 24px 80px var(--iconShadow); }
-    h1 { font-size: clamp(38px, 6vw, 62px); font-weight: 800; letter-spacing: -1.5px; margin: 28px 0 14px; }
-    h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .sub { font-size: clamp(17px, 2.4vw, 21px); color: var(--dim); max-width: 640px; margin: 0 auto 30px; }
-    .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn { display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 700; font-size: 16px; text-decoration: none; }
-    .btn.primary { background: var(--grad); color: #fff; box-shadow: 0 10px 34px var(--btnShadow); }
-    .btn.ghost { border: 1px solid var(--edge); color: var(--text); }
-    .fine { font-size: 12.5px; color: var(--dimmer); margin-top: 14px; }
-    .states { margin: 54px auto 0; max-width: 880px; }
-    .statesTitle { font-size: 14px; color: var(--dim); margin-bottom: 20px; font-weight: 600; }
-    .stateGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px 14px; }
-    .stateGrid figure { margin: 0; display: flex; align-items: center; gap: 10px; text-align: left; }
-    .stateGrid img { width: 42px; height: auto; flex: none; }
-    .stateGrid figcaption { font-size: 12px; color: var(--dimmer); line-height: 1.35; }
-    .stateGrid figcaption b { display: block; font-size: 13px; color: var(--text); font-weight: 700; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--fg);line-height:1.5;
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    transition:background .25s,color .25s;-webkit-font-smoothing:antialiased}
+  .w{max-width:1120px;margin:0 auto;padding:0 28px}
+  a{color:inherit}
 
-    section { padding: 74px 0 8px; }
-    h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -0.8px; margin-bottom: 10px; }
-    .lede { color: var(--dim); max-width: 640px; margin-bottom: 34px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-    .card { background: var(--card); border: 1px solid var(--edge); border-radius: 18px; padding: 24px; }
-    .card h3 { font-size: 17px; margin-bottom: 8px; }
-    .card p { font-size: 14.5px; color: var(--dim); }
-    .card .k { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: var(--chipbg); color: var(--chiptext); border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; }
+  /* ---- top bar ---- */
+  header{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);
+    background:color-mix(in srgb,var(--ink) 82%,transparent);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:8px;height:62px}
+  .bar img{width:28px;height:28px;border-radius:7px}
+  .word{font-weight:700;letter-spacing:-.2px;font-size:16.5px;margin-right:auto}
+  .bar nav{display:flex;gap:22px;align-items:center}
+  .bar nav a{font-size:13.5px;color:var(--fg2);text-decoration:none;font-weight:550}
+  .bar nav a:hover{color:var(--fg)}
+  .get{border:1px solid var(--line);border-radius:9px;padding:7px 14px;font-size:13.5px;font-weight:650;text-decoration:none}
+  .get:hover{background:var(--sheet)}
+  .tog{background:none;border:1px solid var(--line);border-radius:8px;width:30px;height:30px;color:var(--fg2);cursor:pointer;font-size:13px}
+  @media(max-width:720px){.bar nav a:not(.get){display:none}}
 
-    .say { background: var(--bg2); border-radius: 22px; padding: 34px; margin-top: 20px; }
-    .say .line { font-size: clamp(17px, 2.6vw, 22px); font-weight: 650; margin: 14px 0; }
-    .say .line span { color: var(--dimmer); font-weight: 500; font-size: 0.8em; margin-left: 10px; }
+  /* ---- hero ---- */
+  .hero{padding:88px 0 26px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  @media(max-width:860px){.hero{grid-template-columns:1fr;gap:36px;padding-top:56px}}
+  .kick{font-size:12px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--fg3);margin-bottom:20px}
+  h1{font-size:clamp(40px,5.6vw,66px);line-height:1.02;letter-spacing:-2.4px;font-weight:800}
+  h1 em{font-style:normal;background:linear-gradient(96deg,var(--amber),var(--coral),var(--magenta),var(--indigo));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .deck{font-size:19px;color:var(--fg2);margin:22px 0 30px;max-width:34em}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .dl{background:var(--fg);color:var(--ink);text-decoration:none;font-weight:700;font-size:15.5px;
+    padding:13px 24px;border-radius:11px;display:inline-block}
+  .dl:hover{opacity:.88}
+  .alt{text-decoration:none;font-weight:600;font-size:14.5px;color:var(--fg2);padding:13px 4px}
+  .alt:hover{color:var(--fg)}
+  .req{font-size:12.5px;color:var(--fg3);margin-top:16px}
+  .heroArt{display:flex;justify-content:center}
+  .heroArt img{width:min(300px,72vw);height:auto;border-radius:60px;
+    box-shadow:0 40px 90px rgba(0,0,0,.45),0 0 0 1px var(--line)}
+  @media(prefers-color-scheme:light){.heroArt img{box-shadow:0 30px 70px rgba(60,45,20,.22)}}
 
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 8px; }
-    .tier { background: var(--card); border: 1px solid var(--edge); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; }
-    .tier.best { border-color: rgba(124,92,255,0.55); box-shadow: 0 0 44px var(--bestGlow); }
-    .tier .tag { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--chiptext); margin-bottom: 8px; }
-    .tier h3 { font-size: 20px; }
-    .tier .amt { font-size: 34px; font-weight: 800; margin: 10px 0 2px; }
-    .tier .amt small { font-size: 14px; color: var(--dimmer); font-weight: 600; }
-    .tier ul { list-style: none; margin: 18px 0 24px; flex: 1; }
-    .tier li { font-size: 14px; color: var(--dim); padding: 5px 0 5px 24px; position: relative; }
-    .tier li::before { content: "✓"; position: absolute; left: 2px; color: #30d158; font-weight: 800; }
-    .tier .btn { text-align: center; }
-    .tier .btn.soon { background: var(--soonBg); color: var(--dim); }
-    #themeBtn { background: none; border: 1px solid var(--edge); color: var(--dim); border-radius: 999px; width: 34px; height: 34px; font-size: 15px; cursor: pointer; }
-    #themeBtn:hover { color: var(--text); }
+  /* ---- dialogue ---- */
+  .talk{padding:96px 0 8px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--fg3);margin-bottom:14px}
+  h2{font-size:clamp(28px,3.7vw,40px);letter-spacing:-1.2px;line-height:1.1;font-weight:800;margin-bottom:14px}
+  .sub{color:var(--fg2);font-size:17px;max-width:40em;margin-bottom:44px}
+  .turns{display:flex;flex-direction:column;gap:28px;max-width:840px}
+  .turn{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+  @media(max-width:760px){.turn{grid-template-columns:1fr;gap:8px}}
+  .said{font-size:clamp(19px,2.3vw,25px);font-weight:650;letter-spacing:-.5px}
+  .said::before{content:"“";color:var(--fg3)}
+  .said::after{content:"”";color:var(--fg3)}
+  .did{font-size:14.5px;color:var(--fg2);border-left:2px solid var(--line);padding-left:16px}
+  .did b{color:var(--fg);font-weight:650}
 
-    .privacy { background: var(--bg2); border-radius: 22px; padding: 36px; }
-    .privacy p { color: var(--dim); max-width: 760px; margin-top: 8px; }
-    .privacy code { font-size: 0.88em; background: var(--card); border: 1px solid var(--edge); border-radius: 6px; padding: 2px 6px; }
-    .privGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 26px; }
-    .privGrid > div { font-size: 13.5px; color: var(--dim); line-height: 1.5; }
-    .privGrid b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
+  /* ---- seats ---- */
+  .seats{padding:100px 0 8px}
+  .seat{display:grid;grid-template-columns:200px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--line)}
+  .seat:last-child{border-bottom:1px solid var(--line)}
+  @media(max-width:760px){.seat{grid-template-columns:1fr;gap:8px}}
+  .seat h3{font-size:17px;font-weight:700;letter-spacing:-.3px}
+  .seat p{color:var(--fg2);font-size:15px;max-width:46em}
 
-    details { border-bottom: 1px solid var(--edge); padding: 16px 4px; }
-    summary { font-weight: 650; font-size: 15.5px; cursor: pointer; }
-    details p { color: var(--dim); font-size: 14.5px; padding-top: 10px; max-width: 760px; }
+  /* ---- states ---- */
+  .states{padding:100px 0 8px}
+  .pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px 18px;margin-top:34px}
+  .pill{display:flex;align-items:center;gap:12px}
+  .pill img{width:46px;height:auto;flex:none}
+  .pill span{font-size:12.5px;color:var(--fg3);line-height:1.35}
+  .pill b{display:block;font-size:13.5px;color:var(--fg);font-weight:700}
 
-    footer { margin-top: 90px; border-top: 1px solid var(--edge); padding: 34px 0 60px; color: var(--dimmer); font-size: 13.5px; display: flex; flex-wrap: wrap; gap: 10px 30px; align-items: center; }
-    footer .mission { flex-basis: 100%; color: var(--dim); font-size: 14.5px; }
-    footer a { color: var(--dim); text-decoration: none; }
-  </style>
+  /* ---- privacy ---- */
+  .priv{margin:104px 0 0;background:var(--ink2);border:1px solid var(--line);border-radius:24px;padding:44px}
+  .priv .path{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+    background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:3px 8px;white-space:nowrap}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:32px}
+  .facts b{display:block;margin-bottom:5px;font-size:14.5px;font-weight:700}
+  .facts p{color:var(--fg2);font-size:14px}
+
+  /* ---- pricing ---- */
+  .pricing{padding:100px 0 8px}
+  .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:18px;margin-top:34px}
+  .plan{border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column;background:var(--sheet)}
+  .plan.now{border-color:color-mix(in srgb,var(--indigo) 55%,transparent)}
+  .plan .when{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin-bottom:10px}
+  .plan h3{font-size:19px;font-weight:750}
+  .cost{font-size:32px;font-weight:800;letter-spacing:-1px;margin:8px 0 16px}
+  .cost small{font-size:13.5px;color:var(--fg3);font-weight:600;letter-spacing:0}
+  .plan ul{list-style:none;flex:1;margin-bottom:22px}
+  .plan li{font-size:14px;color:var(--fg2);padding:4px 0 4px 20px;position:relative}
+  .plan li::before{content:"·";position:absolute;left:6px;color:var(--fg3);font-weight:900}
+  .pick{text-align:center;text-decoration:none;font-weight:700;font-size:14.5px;padding:11px;border-radius:10px;border:1px solid var(--line)}
+  .plan.now .pick{background:var(--fg);color:var(--ink);border-color:transparent}
+  .pick:hover{opacity:.86}
+  .note{font-size:12.5px;color:var(--fg3);margin-top:18px}
+
+  /* ---- faq + foot ---- */
+  .faq{padding:100px 0 8px;max-width:820px}
+  details{border-top:1px solid var(--line);padding:18px 2px}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{cursor:pointer;font-weight:650;font-size:16px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";float:right;color:var(--fg3);font-weight:400}
+  details[open] summary::after{content:"–"}
+  details p{color:var(--fg2);font-size:14.5px;padding-top:12px}
+  footer{margin-top:110px;border-top:1px solid var(--line);padding:36px 0 70px;
+    display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;font-size:13px;color:var(--fg3)}
+  footer .mission{flex-basis:100%;color:var(--fg2);font-size:14.5px;max-width:44em}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--fg)}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <nav>
-      <img src="assets/iris-icon.png" alt="Sidekick" />
-      <div class="name">Sidekick</div>
-      <a href="#how">How it works</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#pricing">Pricing</a>
-      <button id="themeBtn" title="Light / dark" aria-label="Toggle light or dark mode">◐</button>
-      <a class="cta" href="#download">Download</a>
-    </nav>
 
-    <div class="hero" id="download">
-      <img class="icon" src="assets/iris-icon.png" alt="Sidekick app icon" />
-      <h1>Talk to what<br /><span class="grad">you're looking at.</span></h1>
-      <p class="sub">Sidekick is the AI who sits behind your screen — and answers to whatever you name them. No tab to open, no context to paste: they're already here. Eyes when you ask, a voice always, hands on request, and a memory of your days that never leaves your Mac.</p>
-      <div class="btns">
-        <a class="btn primary" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.0/Sidekick-0.1.0-arm64.dmg">Download for Mac</a>
-        <a class="btn ghost" href="#pricing">See pricing</a>
+<header><div class="w bar">
+  <img src="assets/sidekick.png" alt="Sidekick" />
+  <span class="word">Sidekick</span>
+  <nav>
+    <a href="#doing">What it does</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#pricing">Pricing</a>
+    <button class="tog" id="tog" aria-label="Light or dark">◐</button>
+    <a class="get" href="#get">Get it</a>
+  </nav>
+</div></header>
+
+<main class="w">
+
+  <section class="hero" id="get">
+    <div>
+      <p class="kick">For macOS · Apple Silicon</p>
+      <h1>The one who's<br /><em>already looking.</em></h1>
+      <p class="deck">Sidekick is a voice at your desk. It sees the screen you're on, remembers the days you've had, and works your Mac when you ask. Nothing to open, nothing to paste — just talk.</p>
+      <div class="cta">
+        <a class="dl" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.0/Sidekick-0.1.0-arm64.dmg">Download free</a>
+        <a class="alt" href="#doing">See what it does →</a>
       </div>
-      <p class="fine">Apple Silicon · macOS 13+ · free to start · early build: right-click → Open the first time</p>
-      <div class="states">
-        <p class="statesTitle">One glance at your menu bar says exactly what they're doing.</p>
-        <div class="stateGrid">
-          <figure><img src="assets/states/listening.png" alt="green pill with a microphone" /><figcaption><b>Listening</b>Awake, waiting for you</figcaption></figure>
-          <figure><img src="assets/states/hearing.png" alt="green pill with sound waves" /><figcaption><b>Hearing you</b>Your voice is landing</figcaption></figure>
-          <figure><img src="assets/states/thinking.png" alt="amber pill with a brain" /><figcaption><b>Thinking</b>Working on your answer</figcaption></figure>
-          <figure><img src="assets/states/speaking.png" alt="blue pill with sound waves" /><figcaption><b>Speaking</b>Talking back — cut in anytime</figcaption></figure>
-          <figure><img src="assets/states/watching.png" alt="purple pill with an eye" /><figcaption><b>Watching</b>Following your screen live</figcaption></figure>
-          <figure><img src="assets/states/capturing.png" alt="orange pill with a camera" /><figcaption><b>Looking</b>Taking a screenshot right now</figcaption></figure>
-          <figure><img src="assets/states/muted.png" alt="red pill with a struck-through microphone" /><figcaption><b>Muted</b>Mic off — can't hear you</figcaption></figure>
-          <figure><img src="assets/states/asleep.png" alt="grey pill with a moon" /><figcaption><b>Asleep</b>Disconnected, costing nothing</figcaption></figure>
-        </div>
+      <p class="req">Free to start, no account, no key. Early build — right-click → Open on first launch.</p>
+    </div>
+    <div class="heroArt"><img src="assets/sidekick.png" alt="The Sidekick app icon: two arcs facing each other with a spark between them" /></div>
+  </section>
+
+  <section class="talk" id="doing">
+    <p class="eyebrow">Out loud</p>
+    <h2>You say it. It happens.</h2>
+    <p class="sub">No prompt box, no screenshots to attach, no copy-paste. These are just things you say while you're working.</p>
+    <div class="turns">
+      <div class="turn"><p class="said">What does this error mean?</p><p class="did"><b>Flash, shutter.</b> It reads the screen you're looking at and explains it.</p></div>
+      <div class="turn"><p class="said">Tell me when the build finishes.</p><p class="did"><b>It keeps watching</b> and speaks up the moment it happens — even if you've wandered off.</p></div>
+      <div class="turn"><p class="said">Summarize this page.</p><p class="did"><b>Reads the whole tab</b>, not just the visible part — below the fold included.</p></div>
+      <div class="turn"><p class="said">Put lunch with Dana on Thursday at noon.</p><p class="did"><b>On your calendar.</b> Reminders, notes, and Mail drafts too — you always hit send.</p></div>
+      <div class="turn"><p class="said">What was I working on yesterday?</p><p class="did"><b>It remembers</b>, and can go look at the actual screenshot again.</p></div>
+      <div class="turn"><p class="said">Take dictation — clean it up as I go.</p><p class="did"><b>Types where your cursor is</b>, verbatim or polished, while you talk.</p></div>
+    </div>
+  </section>
+
+  <section class="seats">
+    <p class="eyebrow">Where it sits</p>
+    <h2>A fourth kind of AI.</h2>
+    <p class="sub">The others wait in a tab, drive your computer for you, or film everything just in case. Sidekick does none of those.</p>
+    <div class="seat"><h3>Not a chatbot</h3><p>You don't go to it and describe your problem. It's already looking at the thing you're asking about, so the context is the screen itself — and the answer comes back as a voice, not a wall of text you have to read.</p></div>
+    <div class="seat"><h3>Not an agent</h3><p>It never takes the wheel. You stay the one working; it helps at the speed of talking. Every action it takes happens visibly, at your request, and stops the moment you say so.</p></div>
+    <div class="seat"><h3>Not a recorder</h3><p>It isn't archiving your life in the background. It looks when you ask, with a flash you can see and a colored pill in your menu bar — and what it keeps never leaves your machine.</p></div>
+  </section>
+
+  <section class="states">
+    <p class="eyebrow">Always honest</p>
+    <h2>You can always tell what it's doing.</h2>
+    <p class="sub">One glance at the menu bar. No hidden states, no ambiguity about whether something is listening or looking.</p>
+    <div class="pills">
+      <div class="pill"><img src="assets/states/listening.png" alt="" /><span><b>Listening</b>Awake, waiting for you</span></div>
+      <div class="pill"><img src="assets/states/hearing.png" alt="" /><span><b>Hearing you</b>Your voice is landing</span></div>
+      <div class="pill"><img src="assets/states/thinking.png" alt="" /><span><b>Thinking</b>Working on your answer</span></div>
+      <div class="pill"><img src="assets/states/speaking.png" alt="" /><span><b>Speaking</b>Cut in anytime</span></div>
+      <div class="pill"><img src="assets/states/watching.png" alt="" /><span><b>Watching</b>Following your screen live</span></div>
+      <div class="pill"><img src="assets/states/capturing.png" alt="" /><span><b>Looking</b>Taking a shot right now</span></div>
+      <div class="pill"><img src="assets/states/muted.png" alt="" /><span><b>Muted</b>Mic off — can't hear you</span></div>
+      <div class="pill"><img src="assets/states/asleep.png" alt="" /><span><b>Asleep</b>Disconnected, costing nothing</span></div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="priv">
+      <p class="eyebrow">Privacy</p>
+      <h2>Your screen never leaves your Mac.</h2>
+      <p class="sub" style="margin-bottom:0">Every screenshot lands in one folder — <span class="path">~/Library/Application Support/Sidekick/memory</span> — next to a small database of what was said and learned. Nothing is uploaded, synced, or backed up. There's no account and no cloud library, so there's no copy of your life for anyone to ask us for.</p>
+      <div class="facts">
+        <div><b>Only when you ask</b><p>Captures happen at your request or while you've told it to watch. Never in the background, always with a flash, a glow, or a colored pill.</p></div>
+        <div><b>What goes out</b><p>The moment you ask, that one image and your voice go to Google's Gemini to be understood — like any assistant. Nothing else, and nothing kept for us.</p></div>
+        <div><b>What we can see</b><p>On the free plan our server stores four things: a random install ID, a date, a token count, a timestamp. No screenshots. No transcripts. No name or email.</p></div>
+        <div><b>Yours to erase</b><p>A switch stops memory entirely. A button wipes every screenshot and transcript. Or drag that folder to the trash — that really is all of it.</p></div>
       </div>
     </div>
+  </section>
 
-    <section>
-      <h2>A different seat at the desk.</h2>
-      <p class="lede">The AI world has chatbots you visit, agents that take over, and recorders that film everything. Sidekick takes the fourth seat — beside you.</p>
-      <div class="grid">
-        <div class="card"><span class="k">Chatbots</span><h3>They wait in a tab</h3><p>You go to them, paste your context, copy answers back. Sidekick is already looking at the thing you're asking about — the context is the screen itself.</p></div>
-        <div class="card"><span class="k">Agents</span><h3>They take the wheel</h3><p>Autonomous agents drive your computer while you watch and hope. Sidekick never drives — you stay the pilot, it assists at the speed of talking, and every action happens visibly at your ask.</p></div>
-        <div class="card"><span class="k">Recorders</span><h3>They film everything</h3><p>Always-on capture tools archive your whole life and let you search it later. Sidekick looks only when you ask, with a flash you can see — and what it remembers stays on your Mac.</p></div>
+  <section class="pricing" id="pricing">
+    <p class="eyebrow">Pricing</p>
+    <h2>Free to start. Free forever if you want.</h2>
+    <p class="sub">Nothing is charged today. Subscriptions land soon, and the free path stays.</p>
+    <div class="plans">
+      <div class="plan now">
+        <p class="when">Available now</p>
+        <h3>Free</h3>
+        <p class="cost">$0</p>
+        <ul>
+          <li>Every feature, no gates</li>
+          <li>A fresh allowance every 30 days</li>
+          <li>Or bring your own Gemini key — unlimited</li>
+          <li>Memory stays entirely on your Mac</li>
+        </ul>
+        <a class="pick" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.0/Sidekick-0.1.0-arm64.dmg">Download</a>
       </div>
-    </section>
-
-    <section id="how">
-      <h2>Presence, sight, memory — and hands.</h2>
-      <p class="lede">Not another chat window. Sidekick is a voice at your desk who can see what you see, remember what mattered, and actually do things.</p>
-      <div class="grid">
-        <div class="card"><span class="k">Presence</span><h3>Always there, never in the way</h3><p>They're listening whenever you're unmuted — just start talking. Interrupt them mid-sentence and they stop. One click and they sleep, costing nothing until you wake them.</p></div>
-        <div class="card"><span class="k">Sight</span><h3>They look when you ask</h3><p>"What am I looking at?" — a flash, a shutter, and they've read your screen. Say "watch my screen" for a soft glowing edge and continuous attention, or have them watch one window even when it's buried.</p></div>
-        <div class="card"><span class="k">Sentinel</span><h3>They speak up on their own</h3><p>"Tell me when the build finishes." They keep watching and pipe up the moment it happens — the first sidekick who taps you on the shoulder.</p></div>
-        <div class="card"><span class="k">Memory</span><h3>They remember your days</h3><p>Screens they've seen and talks you've had become a private memory graph on your Mac. Ask about yesterday's error, last week's page — they recall it, and can go look at the screenshot again.</p></div>
-        <div class="card"><span class="k">Hands</span><h3>They can actually do it</h3><p>Open sites, apps, and files. Find documents by name or content. Copy and paste for you, type dictation straight into any text field — verbatim or polished as you speak.</p></div>
-        <div class="card"><span class="k">Knowledge</span><h3>Current, not canned</h3><p>They search the web when the answer isn't on your screen or in their memory — news, people, prices, docs — and tell you they looked it up.</p></div>
+      <div class="plan">
+        <p class="when">Coming soon</p>
+        <h3>Plus</h3>
+        <p class="cost">$19 <small>/ month</small></p>
+        <ul>
+          <li>A much larger monthly allowance</li>
+          <li>Priority voices and new abilities first</li>
+          <li>No keys, ever</li>
+        </ul>
+        <a class="pick" href="mailto:richie@iris.church?subject=Sidekick%20Plus">Join the list</a>
       </div>
-      <div class="say">
-        <div class="line">"Hey, what does this error mean?" <span>— flash, and they explain it</span></div>
-        <div class="line">"Watch my terminal and tell me when the deploy finishes." <span>— they will, out loud</span></div>
-        <div class="line">"What was I working on yesterday afternoon?" <span>— they remember</span></div>
-        <div class="line">"Take dictation — polished." <span>— you talk, they write it well</span></div>
+      <div class="plan">
+        <p class="when">Coming soon</p>
+        <h3>Family</h3>
+        <p class="cost">$49 <small>/ month</small></p>
+        <ul>
+          <li>One sidekick across desktop and phone</li>
+          <li>Shared memory — the same friend everywhere</li>
+          <li>Set it up for someone you love</li>
+        </ul>
+        <a class="pick" href="mailto:richie@iris.church?subject=Sidekick%20Family">Join the list</a>
       </div>
-    </section>
+    </div>
+    <p class="note">Launch pricing, subject to change. No payment details collected.</p>
+  </section>
 
-    <section id="privacy">
-      <div class="privacy">
-        <h2>Your screen never leaves your Mac.</h2>
-        <p>Every screenshot lives in one folder on your machine — <code>~/Library/ApplicationApplication&nbsp;Support/Screen&nbsp;Shot/memorynbsp;Support/Sidekick/memory</code> — beside a database of what was said and learned. Nothing is uploaded, backed up, or synced. There is no account, no cloud library, no copy we could hand to anyone.</p>
-        <div class="privGrid">
-          <div><b>Captured only when you ask</b>Screens are grabbed at your request or while you've told them to watch — never in the background, always with a visible flash, a glowing edge, or a colored menu-bar pill.</div>
-          <div><b>What actually goes out</b>The moment you ask a question, that one image and your voice go to Google's Gemini to be understood — like any assistant. Nothing else, and nothing is kept there for us.</div>
-          <div><b>What we can see: a number</b>On the free plan our server stores exactly four things — a random install ID, a date, a token count, and nothing else. No screenshots, no transcripts, no name, no email.</div>
-          <div><b>Yours to delete</b>One switch stops memory entirely. One button erases every screenshot and transcript. Or drag that folder to the trash — that's genuinely all of it.</div>
-        </div>
-      </div>
-    </section>
+  <section class="faq">
+    <p class="eyebrow">Questions</p>
+    <h2>The things people ask.</h2>
+    <details open><summary>Is it listening all the time?</summary><p>While it's awake and unmuted, yes — that's what makes it a sidekick instead of an app you open. The menu-bar pill never lies about it: green means listening, red means muted, a moon means asleep. Asleep is a real disconnect that costs nothing.</p></details>
+    <details><summary>Can it see my screen without asking?</summary><p>No. It has no capture running at rest. When it looks, you get a white flash and a shutter; when it watches continuously, your screen edge glows the whole time.</p></details>
+    <details><summary>What can it actually do to my Mac?</summary><p>Open sites, apps and files, find documents, read and write your clipboard, type and paste for you, put things on your calendar, add reminders, write notes, draft mail for you to send, and control music. It can't run terminal commands or install anything — deliberately.</p></details>
+    <details><summary>Why does macOS warn me when I install?</summary><p>This early build isn't notarized with Apple yet, so the first launch needs a right-click → Open. Signed builds are coming.</p></details>
+    <details><summary>Windows?</summary><p>It's built cross-platform and a Windows version is on the way.</p></details>
+  </section>
 
-    <section id="pricing">
-      <h2>Simple, honest pricing.</h2>
-      <p class="lede">Start free today. Subscriptions arrive soon — nothing is charged yet, and the free path never goes away.</p>
-      <div class="price-grid">
-        <div class="tier">
-          <div class="tag">Available now</div>
-          <h3>Free</h3>
-          <div class="amt">$0 <small>forever</small></div>
-          <ul>
-            <li>Everything Sidekick does, no feature gates</li>
-            <li>Bring your own Gemini API key</li>
-            <li>Memory stays 100% on your Mac</li>
-            <li>Built-in usage meter</li>
-          </ul>
-          <a class="btn primary" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.0/Sidekick-0.1.0-arm64.dmg">Download</a>
-        </div>
-        <div class="tier best">
-          <div class="tag">Coming soon</div>
-          <h3>SidekickScreen&nbsp;Shot&nbsp;Plusnbsp;Plus</h3>
-          <div class="amt">$19 <small>/ month</small></div>
-          <ul>
-            <li>No API keys — just sign in and talk</li>
-            <li>Generous monthly conversation allowance</li>
-            <li>Fresh allowance every 30 days</li>
-            <li>Priority voices and first new abilities</li>
-          </ul>
-          <a class="btn soon" href="mailto:richie@iris.church?subject=Sidekick%20Plus%20waitlist">Join the waitlist</a>
-        </div>
-        <div class="tier">
-          <div class="tag">Coming soon</div>
-          <h3>SidekickScreen&nbsp;Shot&nbsp;Carenbsp;Care</h3>
-          <div class="amt">$49 <small>/ month</small></div>
-          <ul>
-            <li>One sidekick across desktop and phone</li>
-            <li>Shared memory — they're the same friend everywhere</li>
-            <li>Set up Sidekick for someone you love</li>
-            <li>Gentle check-ins and family peace of mind</li>
-          </ul>
-          <a class="btn soon" href="mailto:richie@iris.church?subject=Sidekick%20Care%20waitlist">Join the waitlist</a>
-        </div>
-      </div>
-      <p class="fine">Launch pricing, subject to change. No payments are collected yet.</p>
-    </section>
+  <footer>
+    <span class="mission">Sidekick is made by Iris, on a mission to eradicate loneliness — starting with someone who's actually there while you work.</span>
+    <span>© 2026 Iris</span>
+    <a href="mailto:richie@iris.church">richie@iris.church</a>
+    <a href="#get">Download</a>
+  </footer>
 
-    <section>
-      <h2>Questions people ask.</h2>
-      <details open><summary>Are they listening all the time?</summary><p>While they're awake and unmuted, yes — that's what makes them a sidekick instead of an app you open. The menu-bar pill always tells the truth: green means listening, red means muted, a moon means asleep. Asleep means fully disconnected.</p></details>
-      <details><summary>What leaves my Mac?</summary><p>Your voice and, when you ask them to look, your screen images go to the AI model to be understood in the moment — the same way any assistant works. What's different is storage: your sidekick's memory of you lives only on your Mac, and you can wipe it in one click.</p></details>
-      <details><summary>Why does macOS warn me when I install?</summary><p>This early build isn't yet notarized with Apple, so the first open needs a right-click → Open. Signed builds are coming.</p></details>
-      <details><summary>Windows?</summary><p>The app is built cross-platform and a Windows version is on the way.</p></details>
-      <details><summary>What does it cost to run?</summary><p>On the free plan you bring your own Gemini key and pay Google directly — typically pennies per hour of conversation. Sidekick shows you a live meter so there are never surprises.</p></details>
-    </section>
+</main>
 
-    <footer>
-      <span class="mission">Sidekick is made by Iris, on a mission to eradicate loneliness — starting with a sidekick who never leaves your side.</span>
-      <span>© 2026 Iris · iris.church</span>
-      <a href="mailto:richie@iris.church">richie@iris.church</a>
-      <a href="#download">Download</a>
-    </footer>
-  </div>
-  <script>
-    document.getElementById('themeBtn').addEventListener('click', function () {
-      var root = document.documentElement;
-      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var current = root.dataset.theme || (systemDark ? 'dark' : 'light');
-      var next = current === 'dark' ? 'light' : 'dark';
-      root.dataset.theme = next;
-      localStorage.setItem('iris-theme', next);
-    });
-  </script>
+<script>
+  document.getElementById('tog').addEventListener('click', function () {
+    var r = document.documentElement;
+    var dark = (r.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
+    r.dataset.theme = dark ? 'light' : 'dark';
+    localStorage.setItem('sk-theme', r.dataset.theme);
+  });
+</script>
 </body>
 </html>
