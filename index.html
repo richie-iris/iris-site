@@ -93,9 +93,17 @@
     .btn.primary { background: var(--grad); color: #fff; box-shadow: 0 10px 34px var(--btnShadow); }
     .btn.ghost { border: 1px solid var(--edge); color: var(--text); }
     .fine { font-size: 12.5px; color: var(--dimmer); margin-top: 14px; }
-    .states { margin: 46px auto 0; max-width: 620px; }
-    .states img { width: 100%; }
-    .states p { font-size: 12.5px; color: var(--dimmer); margin-top: 8px; }
+    .states { margin: 46px auto 0; max-width: 720px; }
+    .states p { font-size: 12.5px; color: var(--dimmer); margin-top: 10px; }
+    .state-strip { display: flex; justify-content: center; gap: 2px; flex-wrap: wrap; }
+    .state { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    /* Each icon is one cell of the 672x56 sprite (seven 96x56 cells),
+       selected via --i and shown at 88px so all seven + labels fit one row
+       inside the 720px container (7x88 + 6x2 gap = 628px). The background-size
+       scales the whole sprite by the same 88/96 factor so cells stay aligned. */
+    .state-ico { display: block; width: 88px; height: 51px;
+      background: url('assets/states.png') no-repeat calc(var(--i) * -88px) 0 / 616px 51.333px; }
+    .state figcaption { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--dimmer); }
 
     section { padding: 74px 0 8px; }
     h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -0.8px; margin-bottom: 10px; }
@@ -158,8 +166,19 @@
         <a class="btn ghost" href="#pricing">See pricing</a>
       </div>
       <p class="fine">Apple Silicon · macOS 13+ · free to start · early build: right-click → Open the first time</p>
-      <div class="states">
-        <img src="assets/states.png" alt="Screen Shot states: listening, hearing, thinking, speaking, watching, capturing, asleep" />
+      <!-- states.png is a 672x56 sprite: seven 96x56 cells, sliced by
+           background-position so each icon carries its own visible label.
+           Order matches the sprite left-to-right. -->
+      <div class="states" role="img" aria-label="Screen Shot states: listening, hearing, thinking, speaking, watching, capturing, asleep">
+        <div class="state-strip" aria-hidden="true">
+          <figure class="state"><span class="state-ico" style="--i:0"></span><figcaption>Listening</figcaption></figure>
+          <figure class="state"><span class="state-ico" style="--i:1"></span><figcaption>Hearing</figcaption></figure>
+          <figure class="state"><span class="state-ico" style="--i:2"></span><figcaption>Thinking</figcaption></figure>
+          <figure class="state"><span class="state-ico" style="--i:3"></span><figcaption>Speaking</figcaption></figure>
+          <figure class="state"><span class="state-ico" style="--i:4"></span><figcaption>Watching</figcaption></figure>
+          <figure class="state"><span class="state-ico" style="--i:5"></span><figcaption>Capturing</figcaption></figure>
+          <figure class="state"><span class="state-ico" style="--i:6"></span><figcaption>Asleep</figcaption></figure>
+        </div>
         <p>You always know what they're doing — hearing you, thinking, speaking, watching, asleep.</p>
       </div>
     </div>
