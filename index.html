@@ -130,7 +130,11 @@
     #themeBtn:hover { color: var(--text); }
 
     .privacy { background: var(--bg2); border-radius: 22px; padding: 36px; }
-    .privacy p { color: var(--dim); max-width: 720px; margin-top: 8px; }
+    .privacy p { color: var(--dim); max-width: 760px; margin-top: 8px; }
+    .privacy code { font-size: 0.88em; background: var(--card); border: 1px solid var(--edge); border-radius: 6px; padding: 2px 6px; }
+    .privGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 26px; }
+    .privGrid > div { font-size: 13.5px; color: var(--dim); line-height: 1.5; }
+    .privGrid b { display: block; color: var(--text); font-size: 14px; margin-bottom: 4px; }
 
     details { border-bottom: 1px solid var(--edge); padding: 16px 4px; }
     summary { font-weight: 650; font-size: 15.5px; cursor: pointer; }
@@ -208,8 +212,14 @@
 
     <section id="privacy">
       <div class="privacy">
-        <h2>Private by architecture.</h2>
-        <p>Your sidekick's memory — every screenshot, every transcript, everything they've learned about your life — lives in a database on your Mac, nowhere else. Screens are only captured when you ask or while you've told them to watch, always with a visible flash, glow, or menu-bar pill so nothing is ever secret. One switch turns memory off. One button erases all of it. Your key, your machine, your sidekick.</p>
+        <h2>Your screen never leaves your Mac.</h2>
+        <p>Every screenshot lives in one folder on your machine — <code>~/Library/Application&nbsp;Support/Screen&nbsp;Shot/memory</code> — beside a database of what was said and learned. Nothing is uploaded, backed up, or synced. There is no account, no cloud library, no copy we could hand to anyone.</p>
+        <div class="privGrid">
+          <div><b>Captured only when you ask</b>Screens are grabbed at your request or while you've told them to watch — never in the background, always with a visible flash, a glowing edge, or a colored menu-bar pill.</div>
+          <div><b>What actually goes out</b>The moment you ask a question, that one image and your voice go to Google's Gemini to be understood — like any assistant. Nothing else, and nothing is kept there for us.</div>
+          <div><b>What we can see: a number</b>On the free plan our server stores exactly four things — a random install ID, a date, a token count, and nothing else. No screenshots, no transcripts, no name, no email.</div>
+          <div><b>Yours to delete</b>One switch stops memory entirely. One button erases every screenshot and transcript. Or drag that folder to the trash — that's genuinely all of it.</div>
+        </div>
       </div>
     </section>
 
