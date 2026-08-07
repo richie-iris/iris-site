@@ -93,9 +93,13 @@
     .btn.primary { background: var(--grad); color: #fff; box-shadow: 0 10px 34px var(--btnShadow); }
     .btn.ghost { border: 1px solid var(--edge); color: var(--text); }
     .fine { font-size: 12.5px; color: var(--dimmer); margin-top: 14px; }
-    .states { margin: 46px auto 0; max-width: 620px; }
-    .states img { width: 100%; }
-    .states p { font-size: 12.5px; color: var(--dimmer); margin-top: 8px; }
+    .states { margin: 54px auto 0; max-width: 880px; }
+    .statesTitle { font-size: 14px; color: var(--dim); margin-bottom: 20px; font-weight: 600; }
+    .stateGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px 14px; }
+    .stateGrid figure { margin: 0; display: flex; align-items: center; gap: 10px; text-align: left; }
+    .stateGrid img { width: 42px; height: auto; flex: none; }
+    .stateGrid figcaption { font-size: 12px; color: var(--dimmer); line-height: 1.35; }
+    .stateGrid figcaption b { display: block; font-size: 13px; color: var(--text); font-weight: 700; }
 
     section { padding: 74px 0 8px; }
     h2 { font-size: clamp(26px, 3.6vw, 36px); letter-spacing: -0.8px; margin-bottom: 10px; }
@@ -159,8 +163,17 @@
       </div>
       <p class="fine">Apple Silicon · macOS 13+ · free to start · early build: right-click → Open the first time</p>
       <div class="states">
-        <img src="assets/states.png" alt="Screen Shot states: listening, hearing, thinking, speaking, watching, capturing, asleep" />
-        <p>You always know what they're doing — hearing you, thinking, speaking, watching, asleep.</p>
+        <p class="statesTitle">One glance at your menu bar says exactly what they're doing.</p>
+        <div class="stateGrid">
+          <figure><img src="assets/states/listening.png" alt="green pill with a microphone" /><figcaption><b>Listening</b>Awake, waiting for you</figcaption></figure>
+          <figure><img src="assets/states/hearing.png" alt="green pill with sound waves" /><figcaption><b>Hearing you</b>Your voice is landing</figcaption></figure>
+          <figure><img src="assets/states/thinking.png" alt="amber pill with a brain" /><figcaption><b>Thinking</b>Working on your answer</figcaption></figure>
+          <figure><img src="assets/states/speaking.png" alt="blue pill with sound waves" /><figcaption><b>Speaking</b>Talking back — cut in anytime</figcaption></figure>
+          <figure><img src="assets/states/watching.png" alt="purple pill with an eye" /><figcaption><b>Watching</b>Following your screen live</figcaption></figure>
+          <figure><img src="assets/states/capturing.png" alt="orange pill with a camera" /><figcaption><b>Looking</b>Taking a screenshot right now</figcaption></figure>
+          <figure><img src="assets/states/muted.png" alt="red pill with a struck-through microphone" /><figcaption><b>Muted</b>Mic off — can't hear you</figcaption></figure>
+          <figure><img src="assets/states/asleep.png" alt="grey pill with a moon" /><figcaption><b>Asleep</b>Disconnected, costing nothing</figcaption></figure>
+        </div>
       </div>
     </div>
 
