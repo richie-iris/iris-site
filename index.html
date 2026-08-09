@@ -120,6 +120,17 @@
     box-shadow:inset 0 0 120px 10px var(--ember-soft), inset 0 0 34px 2px var(--ember-soft)}
   body.watching #glow{opacity:1}
 
+  /* ---- examples showcase ---- */
+  .examples-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;margin-top:40px}
+  .example-card{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column}
+  .example-num{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--ember);margin-bottom:10px}
+  .example-card h3{font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.2;margin-bottom:12px;color:var(--fg)}
+  .example-desc{font-size:15px;color:var(--fg2);margin-bottom:20px;flex:1}
+  .example-prompts{border-top:1px solid var(--line);padding-top:16px;margin-top:auto}
+  .prompt-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--fg3);margin-bottom:10px}
+  .prompt-item{font-family:var(--serif);font-size:14.5px;font-style:italic;color:var(--fg);padding:8px 12px;background:color-mix(in srgb,var(--bg2) 60%,transparent);border-radius:8px;border:1px solid var(--line);margin-bottom:8px}
+  .prompt-item:last-child{margin-bottom:0}
+
   /* ---- chapter six: the row of eight ---- */
   .eight{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:26px 18px;margin-top:44px}
   .eight figure{display:flex;align-items:center;gap:12px}
@@ -170,6 +181,7 @@
   <span class="state" id="state"><img id="stateIcon" src="assets/states/listening.png" alt="" /><span id="stateName">listening</span></span>
   <nav>
     <a href="#hands">What she does</a>
+    <a href="#examples">Skills & Examples</a>
     <a href="#loyal">Trust</a>
     <a href="#pricing">Pricing</a>
     <button class="tog" id="tog" aria-label="Light or dark">◐</button>
@@ -220,6 +232,51 @@
     </div>
     <p style="margin-top:34px">She only ever works inside your home folder, and anything she puts in the trash can come back out.</p>
     <p>If you'd do it with your own two hands at this Mac, odds are you can just ask. <b>A sidekick who can't carry anything is just a narrator.</b></p>
+  </section>
+
+  <section class="wide" id="examples" data-state="thinking">
+    <div class="col" style="padding:0">
+      <p class="chapter">Skills & Tools in Action</p>
+      <h2>Three things she does,<br />and what to say out loud.</h2>
+      <p>Sidekick combines real-time voice, screen vision, native macOS tools, and local memory. Here is what that looks like in practice:</p>
+    </div>
+    <div class="examples-grid">
+      <div class="example-card">
+        <div class="example-num">01 · VISION & ALERTS</div>
+        <h3>Screen & Window Watching</h3>
+        <p class="example-desc">She monitors a specific window or your full screen in the background and speaks up the moment an event or change appears.</p>
+        <div class="example-prompts">
+          <p class="prompt-title">What you can say out loud:</p>
+          <div class="prompt-item">"Watch my Zoom call and let me know when Sarah joins."</div>
+          <div class="prompt-item">"Watch my browser window and speak up when the build hits 100%."</div>
+          <div class="prompt-item">"What buttons are in this window right now?"</div>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-num">02 · HANDS & AUTOMATION</div>
+        <h3>Hands-Free macOS Controls</h3>
+        <p class="example-desc">Direct native integration with Calendar, Mail, Reminders, Notes, Contacts, Files, Clipboard, and System Controls.</p>
+        <div class="example-prompts">
+          <p class="prompt-title">What you can say out loud:</p>
+          <div class="prompt-item">"Move my 2pm meeting to Thursday and invite Sam."</div>
+          <div class="prompt-item">"Draft an email to Alex saying the proposal is ready, then read it back."</div>
+          <div class="prompt-item">"Find the Henderson contract in Downloads and move it to Documents."</div>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-num">03 · CONTEXT & SAFETY</div>
+        <h3>Local Memory & Shell Tools</h3>
+        <p class="example-desc">Recalls past screens and conversations stored locally on your Mac, and runs safe zsh shell diagnostics by voice.</p>
+        <div class="example-prompts">
+          <p class="prompt-title">What you can say out loud:</p>
+          <div class="prompt-item">"Where did we leave off on the Stripe webhook bug yesterday?"</div>
+          <div class="prompt-item">"Run git status in my project directory."</div>
+          <div class="prompt-item">"What processes are listening on port 3000?"</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="col" id="watch" data-state="watching">
