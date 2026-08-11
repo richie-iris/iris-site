@@ -1,697 +1,546 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vibe Chat — The conversation around the code</title>
-<meta name="description" content="Vibe Chat is the voice that watches your coding agent. Talk to it while your agent codes. It reads the diff, runs your tests, and explains what just happened — so you can steer." />
-<meta property="og:title" content="Vibe Chat — The conversation around the code" />
-<meta property="og:description" content="Talk to it while your coding agent works. Vibe Chat reads the diff, runs your tests, and explains what just happened in real time." />
-<meta property="og:image" content="assets/vibe_chat_hero.png" />
-<meta property="og:type" content="website" />
-<meta name="theme-color" content="#06080d" />
-<link rel="icon" type="image/png" href="assets/vibe_chat_icon.png" />
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spotter — the voice that watches while you build</title>
+<meta name="description" content="A spotter watches while you lift. Spotter watches while your coding agent writes — reading the diff, running the tests, and telling you in plain speech what just changed.">
+<link rel="icon" href="assets/favicon.png">
+<meta property="og:title" content="Spotter — the voice that watches while you build">
+<meta property="og:description" content="The agent writes. Spotter watches, tests, and explains — out loud.">
+<meta property="og:image" content="assets/spotter.png">
 <style>
-  :root {
-    --bg-base: #06080d;
-    --bg-surface: rgba(255, 255, 255, 0.035);
-    --bg-surface-hover: rgba(255, 255, 255, 0.06);
-    --bg-card: rgba(18, 24, 38, 0.55);
-    --fg-primary: #f5f7fa;
-    --fg-secondary: rgba(245, 247, 250, 0.65);
-    --fg-muted: rgba(245, 247, 250, 0.42);
-    --line: rgba(255, 255, 255, 0.08);
-    --line-glow: rgba(0, 240, 255, 0.25);
-    --cyan: #00f0ff;
-    --cyan-glow: rgba(0, 240, 255, 0.18);
-    --purple: #a855f7;
-    --violet: #6366f1;
-    --add: #30d158;
-    --del: #ff453a;
-    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
-    --font-mono: "SF Mono", "Fira Code", monospace;
-  }
+:root{
+  --ink:#05070a; --ink2:#0a0e14; --panel:#0e141c; --line:#1c2735;
+  --fg:#e8eef5; --mut:#8ea3ba; --dim:#5d7288;
+  --cy:#4fc3e8; --cy-b:#7fdcf7; --cy-d:#1d6d8c;
+  --warm:#f0a868; --rose:#e8798a; --violet:#9d8bf0; --lime:#8fd68a;
+  --max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink); color:var(--fg);
+  font:400 17px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+a{color:inherit}
+img{max-width:100%;display:block}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  body {
-    background: var(--bg-base);
-    color: var(--fg-primary);
-    font-family: var(--font-sans);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: var(--cyan-glow); color: #fff; }
+/* ---------- nav ---------- */
+nav{position:fixed;inset:0 0 auto;z-index:50;backdrop-filter:blur(14px);
+  background:rgba(5,7,10,.72);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-bottom-color:var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:-.01em;text-decoration:none;font-size:1.02rem}
+.brand svg{width:26px;height:26px;flex:none}
+.nav-cta{font-size:.88rem;font-weight:600;text-decoration:none;padding:9px 17px;border-radius:999px;
+  background:var(--cy);color:#04222e;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(79,195,232,.32)}
 
-  /* ---- Header Nav ---- */
-  .header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 28px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    background: rgba(6, 8, 13, 0.75);
-    border-bottom: 1px solid var(--line);
-  }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: -0.4px;
-  }
-  .brand img {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px var(--cyan-glow);
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .nav-links a {
-    color: var(--fg-secondary);
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--fg-primary); }
-  .btn-download-sm {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 7px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-  }
-  .btn-download-sm:hover {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
+/* ---------- hero ---------- */
+header{position:relative;padding:190px 0 120px;overflow:hidden}
+.halo{position:absolute;left:50%;top:-8%;width:1150px;height:1150px;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(79,195,232,.17) 0%,rgba(79,195,232,.06) 32%,transparent 66%);
+  pointer-events:none;z-index:0}
+.grid-bg{position:absolute;inset:0;z-index:0;opacity:.4;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 78% 58% at 50% 32%,#000 20%,transparent 72%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 58% at 50% 32%,#000 20%,transparent 72%)}
+header .wrap{position:relative;z-index:1;text-align:center}
+.reticle{width:118px;height:118px;margin:0 auto 40px;display:block}
+.eyebrow{font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cy);font-weight:600;margin-bottom:26px}
+h1{font-size:clamp(2.9rem,7.4vw,5.4rem);line-height:1.03;letter-spacing:-.035em;font-weight:400}
+h1 em{font-style:normal;color:var(--cy);position:relative;white-space:nowrap}
+.lede{max-width:640px;margin:30px auto 0;font-size:clamp(1.06rem,2.1vw,1.28rem);color:var(--mut);line-height:1.6}
+.cta-row{margin-top:44px;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;
+  padding:15px 30px;border-radius:999px;font-size:1rem;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-p{background:var(--cy);color:#04222e;box-shadow:0 10px 34px rgba(79,195,232,.24)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 46px rgba(79,195,232,.4)}
+.btn-s{border:1px solid var(--line);color:var(--fg)}
+.btn-s:hover{border-color:var(--cy);color:var(--cy)}
+.meta{margin-top:17px;font-size:.83rem;color:var(--mut)}
+.meta b{color:var(--fg);font-weight:600}
 
-  /* ---- Hero Section ---- */
-  .hero {
-    position: relative;
-    padding: 135px 24px 70px;
-    text-align: center;
-    overflow: hidden;
-  }
-  .hero-glow-bg {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 900px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(168, 85, 247, 0.08) 45%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 820px;
-    margin: 0 auto;
-  }
-  .hero-icon {
-    width: 96px;
-    height: 96px;
-    border-radius: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 20px 60px rgba(0, 240, 255, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.15);
-    animation: float 6s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-  .eyebrow-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: rgba(0, 240, 255, 0.08);
-    border: 1px solid rgba(0, 240, 255, 0.25);
-    color: var(--cyan);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .hero-title {
-    font-size: clamp(48px, 8vw, 84px);
-    font-weight: 800;
-    line-height: 1.02;
-    letter-spacing: -2.5px;
-    background: linear-gradient(180deg, #ffffff 0%, rgba(245, 247, 250, 0.72) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 22px;
-  }
-  .hero-deck {
-    font-size: clamp(18px, 2.4vw, 22px);
-    color: var(--fg-secondary);
-    max-width: 600px;
-    margin: 0 auto 36px;
-    font-weight: 400;
-    line-height: 1.5;
-  }
-  .cta-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
-    color: #fff;
-    font-size: 17px;
-    font-weight: 700;
-    padding: 16px 36px;
-    border-radius: 14px;
-    box-shadow: 0 10px 40px rgba(0, 240, 255, 0.35);
-    transition: all 0.25s ease;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 50px rgba(0, 240, 255, 0.5);
-    filter: brightness(1.1);
-  }
-  .platform-note {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--fg-muted);
-  }
+/* ---------- section furniture ---------- */
+section{position:relative;padding:112px 0}
+.kicker{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cy);font-weight:600;margin-bottom:16px}
+h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;font-weight:400}
+.sec-lede{max-width:600px;margin-top:20px;color:var(--mut);font-size:1.06rem}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
 
-  /* ---- Hero Mockup Frame ---- */
-  .hero-mockup-wrapper {
-    margin-top: 50px;
-    position: relative;
-    max-width: 980px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .hero-mockup-img {
-    width: 100%;
-    border-radius: 18px;
-    border: 1px solid var(--line);
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 240, 255, 0.15);
-    display: block;
-  }
+/* ---------- the idea ---------- */
+.idea{max-width:800px;margin:0 auto;text-align:center}
+.idea .big{font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:1.42;letter-spacing:-.02em;font-weight:400}
+.idea .big span{color:var(--cy)}
+.idea p{margin-top:26px;color:var(--mut);font-size:1.06rem;max-width:600px;margin-left:auto;margin-right:auto}
 
-  /* ---- Scene / Code Diff Box ---- */
-  .scene-card {
-    max-width: 860px;
-    margin: 60px auto 0;
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.6);
-    backdrop-filter: blur(20px);
-    text-align: left;
-  }
-  .scene-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 20px;
-    background: rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--fg-muted);
-  }
-  .dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.2); }
-  .dot.red { background: #ff5f56; }
-  .dot.yellow { background: #ffbd2e; }
-  .dot.green { background: #27c93f; }
-  .scene-title { margin-left: 10px; color: var(--fg-secondary); }
-  .scene-status {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--cyan);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 10px var(--cyan);
-  }
-  .scene-diff {
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    line-height: 1.8;
-    padding: 16px 20px;
-    background: rgba(0,0,0,0.2);
-    overflow-x: auto;
-  }
-  .scene-diff .add { background: rgba(48, 209, 88, 0.12); color: var(--add); display: block; padding: 2px 8px; border-radius: 4px; }
-  .scene-diff .del { background: rgba(255, 69, 58, 0.12); color: var(--del); display: block; padding: 2px 8px; border-radius: 4px; }
-  .scene-diff .ctx { color: var(--fg-muted); display: block; padding: 2px 8px; }
-  .scene-voice {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px;
-    background: rgba(0, 240, 255, 0.04);
-    border-top: 1px solid var(--line);
-  }
-  .wave-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    height: 18px;
-  }
-  .wave-icon i {
-    width: 3px;
-    height: 6px;
-    border-radius: 2px;
-    background: var(--cyan);
-    animation: wave-anim 1.2s ease-in-out infinite;
-  }
-  .wave-icon i:nth-child(1) { animation-delay: 0s; }
-  .wave-icon i:nth-child(2) { animation-delay: 0.15s; }
-  .wave-icon i:nth-child(3) { animation-delay: 0.3s; }
-  .wave-icon i:nth-child(4) { animation-delay: 0.45s; }
-  @keyframes wave-anim {
-    0%, 100% { height: 6px; }
-    50% { height: 18px; }
-  }
-  .scene-voice-text { font-size: 15px; color: var(--fg-primary); }
+/* ---------- moments ---------- */
+.moment{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center;padding:74px 0;border-top:1px solid var(--line)}
+.moment:nth-child(even) .art{order:2}
+.art{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--ink2);aspect-ratio:4/3}
+.art svg{width:100%;height:100%;display:block}
+.m-tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
+  font-weight:600;color:var(--mut);margin-bottom:15px}
+.m-tag i{width:6px;height:6px;border-radius:50%;background:var(--cy);display:block;font-style:normal}
+.moment h3{font-size:clamp(1.5rem,3vw,2.05rem);line-height:1.2;letter-spacing:-.025em;font-weight:400;margin-bottom:15px}
+.moment .who{color:var(--mut);font-size:.95rem;margin-bottom:26px;line-height:1.6}
 
-  /* ---- Common Section Styling ---- */
-  section { padding: 110px 24px; position: relative; }
-  .container { max-width: 1040px; margin: 0 auto; }
-  .section-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--cyan);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .section-heading {
-    font-size: clamp(32px, 5vw, 54px);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
-    margin-bottom: 20px;
-  }
-  .section-sub {
-    font-size: 18px;
-    color: var(--fg-secondary);
-    max-width: 640px;
-    margin-bottom: 50px;
-    line-height: 1.5;
-  }
+/* conversation */
+.convo{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.022),transparent);padding:8px}
+.turn{display:flex;gap:12px;padding:12px 13px;align-items:flex-start}
+.turn+.turn{border-top:1px solid rgba(255,255,255,.045)}
+.av{width:23px;height:23px;border-radius:50%;flex:none;margin-top:2px;display:grid;place-items:center;font-size:.6rem;font-weight:700;letter-spacing:.02em}
+.av.you{background:rgba(255,255,255,.07);color:var(--mut)}
+.av.sp{background:radial-gradient(circle at 50% 45%,var(--cy-b),var(--cy-d));color:#04222e;
+  box-shadow:0 0 0 3px rgba(79,195,232,.13)}
+.turn p{font-size:.945rem;line-height:1.58}
+.turn.sp p{color:var(--fg)}
+.turn.you p{color:var(--mut)}
+.tool{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:.75rem;color:var(--cy);background:rgba(79,195,232,.08);border:1px solid rgba(79,195,232,.2);
+  padding:2px 8px;border-radius:5px;margin-bottom:7px}
 
-  /* ---- Feature Visual Showcase ---- */
-  .showcase-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-  }
-  @media (max-width: 860px) { .showcase-grid { grid-template-columns: 1fr; } }
-  .showcase-card {
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 36px;
-    backdrop-filter: blur(20px);
-  }
-  .showcase-card h3 {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 14px;
-    letter-spacing: -0.5px;
-  }
-  .showcase-card p {
-    font-size: 16px;
-    color: var(--fg-secondary);
-    line-height: 1.6;
-  }
-  .showcase-img-box {
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  }
-  .showcase-img-box img { width: 100%; display: block; }
+/* ---------- capability cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:18px;margin-top:52px}
+.card{border:1px solid var(--line);border-radius:15px;padding:28px 24px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);
+  transition:border-color .25s,transform .25s}
+.card:hover{border-color:rgba(79,195,232,.4);transform:translateY(-3px)}
+.card svg{width:27px;height:27px;margin-bottom:17px}
+.card h4{font-size:1.05rem;font-weight:600;margin-bottom:9px;letter-spacing:-.01em}
+.card p{color:var(--mut);font-size:.93rem;line-height:1.6}
 
-  /* ---- Prompt Cards Grid ---- */
-  .prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 40px;
-  }
-  @media (max-width: 768px) { .prompts-grid { grid-template-columns: 1fr; } }
-  .prompt-card {
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px 28px;
-    backdrop-filter: blur(16px);
-    transition: all 0.25s ease;
-  }
-  .prompt-card:hover {
-    border-color: rgba(0, 240, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  }
-  .prompt-quote {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    color: var(--cyan);
-    margin-bottom: 12px;
-  }
-  .prompt-action {
-    font-size: 14px;
-    color: var(--fg-secondary);
-    line-height: 1.5;
-  }
+/* ---------- states strip ---------- */
+.states{display:flex;gap:14px;flex-wrap:wrap;margin-top:44px;justify-content:center}
+.state{text-align:center;opacity:.9}
+.state img{width:62px;height:auto;margin:0 auto 9px;border-radius:8px}
+.state span{font-size:.72rem;color:var(--mut);letter-spacing:.05em}
 
-  /* ---- Tools & Capabilities Surface ---- */
-  .capabilities-surface {
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    overflow: hidden;
-    backdrop-filter: blur(20px);
-  }
-  .cap-header {
-    padding: 20px 28px;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--fg-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .cap-row {
-    padding: 24px 28px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  .cap-row:last-child { border-bottom: none; }
-  .cap-info h4 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-  .cap-info p { font-size: 14px; color: var(--fg-secondary); }
-  .sw-toggle {
-    width: 44px; height: 26px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 13px;
-    position: relative;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .sw-toggle.active { background: var(--cyan); }
-  .sw-toggle::after {
-    content: '';
-    position: absolute;
-    top: 3px; left: 3px;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: #fff;
-    transition: transform 0.2s ease;
-  }
-  .sw-toggle.active::after { transform: translateX(18px); }
+/* ---------- honesty ---------- */
+.plain{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;margin-top:46px}
+.plain div{border-left:2px solid var(--line);padding-left:20px}
+.plain h4{font-size:.98rem;font-weight:600;margin-bottom:8px}
+.plain p{color:var(--mut);font-size:.92rem;line-height:1.62}
 
-  /* ---- FAQ Accordion ---- */
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 40px;
-  }
-  .faq-item {
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px 28px;
-    cursor: pointer;
-  }
-  .faq-question {
-    font-size: 18px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .faq-answer {
-    font-size: 15px;
-    color: var(--fg-secondary);
-    margin-top: 14px;
-    line-height: 1.6;
-    display: none;
-  }
-  .faq-item.open .faq-answer { display: block; }
+/* ---------- final ---------- */
+.final{text-align:center;padding:126px 0 118px;position:relative;overflow:hidden}
+.final .halo{top:-30%;opacity:.75}
+.final .wrap{position:relative;z-index:1}
+footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:var(--mut)}
+.foot-in{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
 
-  /* ---- Footer CTA ---- */
-  .cta-section {
-    text-align: center;
-    padding: 130px 24px;
-    background: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 60%);
-  }
-  .footer {
-    border-top: 1px solid var(--line);
-    padding: 40px 28px;
-    font-size: 13px;
-    color: var(--fg-muted);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+@media(max-width:880px){
+  header{padding:150px 0 84px}
+  section{padding:80px 0}
+  .moment{grid-template-columns:1fr;gap:34px;padding:56px 0}
+  .moment:nth-child(even) .art{order:0}
+}
+@media(prefers-reduced-motion:no-preference){
+  .pulse{animation:pulse 3.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+  .sweep{animation:spin 26s linear infinite;transform-origin:center}
+  @keyframes spin{to{transform:rotate(360deg)}}
+}
 </style>
 </head>
 <body>
 
-  <!-- Top Header Navigation -->
-  <header class="header">
-    <div class="brand">
-      <img src="assets/vibe_chat_icon.png" alt="Vibe Chat Icon" />
-      <span>Vibe Chat</span>
+<nav id="nav"><div class="nav-in">
+  <a class="brand" href="#top">
+    <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="9" fill="#7fdcf7"/>
+      <g stroke="#4fc3e8" stroke-width="8" stroke-linecap="round">
+        <path d="M50 14a36 36 0 0 1 25.5 10.5" opacity=".9"/>
+        <path d="M86 50a36 36 0 0 1-10.5 25.5" opacity=".9"/>
+        <path d="M50 86a36 36 0 0 1-25.5-10.5" opacity=".9"/>
+        <path d="M14 50a36 36 0 0 1 10.5-25.5" opacity=".9"/>
+      </g>
+    </svg>
+    Spotter
+  </a>
+  <a class="nav-cta" href="#get">Download for Mac</a>
+</div></nav>
+
+<header id="top">
+  <div class="grid-bg"></div><div class="halo"></div>
+  <div class="wrap">
+    <svg class="reticle" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="core"><stop offset="0" stop-color="#eafaff"/><stop offset="55%" stop-color="#7fdcf7"/><stop offset="100%" stop-color="#1d6d8c"/></radialGradient>
+        <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <circle cx="100" cy="100" r="46" fill="rgba(79,195,232,.07)"/>
+      <g class="sweep" stroke="#4fc3e8" stroke-width="2" opacity=".45">
+        <circle cx="100" cy="100" r="76" stroke-dasharray="5 13"/>
+      </g>
+      <g stroke="#4fc3e8" stroke-width="9" stroke-linecap="round" filter="url(#glow)">
+        <path d="M100 30a70 70 0 0 1 49.5 20.5"/><path d="M170 100a70 70 0 0 1-20.5 49.5"/>
+        <path d="M100 170a70 70 0 0 1-49.5-20.5"/><path d="M30 100a70 70 0 0 1 20.5-49.5"/>
+      </g>
+      <g stroke="#7fdcf7" stroke-width="5" stroke-linecap="round" opacity=".85">
+        <path d="M100 12v13"/><path d="M188 100h-13"/><path d="M100 188v-13"/><path d="M12 100h13"/>
+      </g>
+      <circle class="pulse" cx="100" cy="100" r="19" fill="url(#core)" filter="url(#glow)"/>
+    </svg>
+
+    <p class="eyebrow">For anyone building with an AI agent</p>
+    <h1 class="serif">The agent writes.<br><em>Spotter watches.</em></h1>
+    <p class="lede">
+      A spotter is the person who stands beside you while you lift something heavy.
+      They don't lift it for you. They watch, they catch what's about to fall, and they
+      tell you what they see — out loud, while it matters.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-p" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.2/Spotter-0.1.2-arm64.dmg">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4l-4.7-5.7 1.4-1.4 3.3 3.3V3z"/><path d="M4 19h16v2H4z"/></svg>
+        Download for Mac
+      </a>
+      <a class="btn btn-s" href="#moments">See it in use</a>
     </div>
-    <nav class="nav-links">
-      <a href="#premise">The Premise</a>
-      <a href="#conversation">Conversation</a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="#faq">FAQ</a>
-      <a href="https://github.com/richie-iris/iris-site/releases/download/v0.1.1/Spotter-0.1.1-arm64.dmg" class="btn-download-sm">Download for Mac</a>
-    </nav>
-  </header>
+    <p class="meta"><b>Free to start.</b> macOS, Apple silicon · signed &amp; notarized · v0.1.2</p>
+  </div>
+</header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-glow-bg"></div>
-    <div class="hero-content">
-      <img class="hero-icon" src="assets/vibe_chat_icon.png" alt="Vibe Chat 3D Headset Icon" />
-      <div class="eyebrow-badge">🎧 Voice for Coding Agents</div>
-      <h1 class="hero-title">The conversation around the code.</h1>
-      <p class="hero-deck">
-        Talk to the voice that watches your coding agent. Ask what changed, run your tests, and steer the work out loud — without leaving your flow.
-      </p>
-      <div class="cta-group">
-        <a href="https://github.com/richie-iris/iris-site/releases/download/v0.1.1/Spotter-0.1.1-arm64.dmg" class="btn-primary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.66-.8 1.11-1.92.99-3.04-.96.04-2.13.64-2.82 1.44-.61.71-1.14 1.86-.99 2.96 1.07.08 2.16-.56 2.82-1.36z"/></svg>
-          Download for Mac
-        </a>
-        <span class="platform-note">Universal macOS · Apple Silicon · Free</span>
+<div class="wrap"><div class="rule"></div></div>
+
+<section>
+  <div class="wrap idea">
+    <p class="big serif">
+      You can now ask an agent to write code you couldn't have written yourself.
+      Nobody solved the harder half — <span>knowing whether it's any good.</span>
+    </p>
+    <p>
+      Spotter sits in your menu bar and watches the same screen you're watching. It reads the diff the
+      agent just produced, runs the tests, opens the files, and tells you what actually happened — in
+      a sentence, in plain speech, while you're still looking at it. You stay the one deciding.
+      You just stop deciding blind.
+    </p>
+  </div>
+</section>
+
+<section id="moments" style="padding-top:20px">
+  <div class="wrap">
+    <p class="kicker">Five moments</p>
+    <h2 class="serif">What it sounds like<br>to not be alone with the agent.</h2>
+    <p class="sec-lede">Five situations Spotter was built for. The people are illustrations, not customers — the exchanges are the kind of thing it actually says.</p>
+
+    <!-- 1 -->
+    <div class="moment">
+      <div class="art">
+        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1620"/><stop offset="1" stop-color="#05070a"/></linearGradient>
+            <radialGradient id="s1" cx=".62" cy=".38"><stop offset="0" stop-color="#4fc3e8" stop-opacity=".5"/><stop offset="1" stop-color="#4fc3e8" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#g1)"/>
+          <circle cx="248" cy="114" r="130" fill="url(#s1)"/>
+          <!-- monitor -->
+          <rect x="196" y="62" width="150" height="102" rx="7" fill="#080e15" stroke="#203040"/>
+          <g fill="#2f4a5e"><rect x="208" y="78" width="62" height="5" rx="2.5"/><rect x="208" y="91" width="94" height="5" rx="2.5"/><rect x="216" y="104" width="76" height="5" rx="2.5"/><rect x="216" y="117" width="52" height="5" rx="2.5"/><rect x="208" y="130" width="88" height="5" rx="2.5"/></g>
+          <rect x="208" y="91" width="94" height="5" rx="2.5" fill="#4fc3e8" opacity=".85"/>
+          <rect x="258" y="164" width="26" height="16" fill="#141d27"/><rect x="232" y="180" width="78" height="6" rx="3" fill="#1a2532"/>
+          <!-- figure, seated, back to us -->
+          <g fill="#101a24">
+            <ellipse cx="112" cy="118" rx="27" ry="30"/>
+            <path d="M60 300c0-52 24-88 52-88s52 36 52 88z"/>
+          </g>
+          <path d="M92 104c6-14 34-14 40 0" stroke="#22384a" stroke-width="3" fill="none"/>
+          <!-- rim light from screen -->
+          <path d="M139 96c4 8 5 20 3 30" stroke="#4fc3e8" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+          <path d="M136 214c10 12 16 34 17 60" stroke="#4fc3e8" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+          <!-- spotter dot -->
+          <circle class="pulse" cx="352" cy="42" r="7" fill="#7fdcf7"/>
+          <circle cx="352" cy="42" r="15" stroke="#4fc3e8" stroke-width="1.5" opacity=".4"/>
+        </svg>
       </div>
-
-      <!-- Hero Visual Frame -->
-      <div class="hero-mockup-wrapper">
-        <img src="assets/vibe_chat_hero.png" alt="Vibe Chat Mac Interface" class="hero-mockup-img" />
-      </div>
-
-      <!-- Scene Diff Preview -->
-      <div class="scene-card">
-        <div class="scene-header">
-          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-          <span class="scene-title">src/auth/session.ts · agent edit live</span>
-          <div class="scene-status"><div class="pulse-dot"></div> Watching Live</div>
-        </div>
-        <div class="scene-diff">
-          <span class="ctx">export async function validateSession(token: string) {</span>
-          <span class="del">  const user = await db.query('SELECT * FROM users WHERE token = ' + token);</span>
-          <span class="add">  const user = await db.query('SELECT * FROM users WHERE token = $1', [token]);</span>
-          <span class="ctx">  return user ? parseUser(user) : null;</span>
-          <span class="ctx">}</span>
-        </div>
-        <div class="scene-voice">
-          <div class="wave-icon"><i></i><i></i><i></i><i></i></div>
-          <div class="scene-voice-text">
-            <b>Vibe Chat:</b> "Claude fixed the SQL injection in <code>validateSession</code> and parameterized the query. I ran your test harness — <strong>24 passed, 0 failed</strong>."
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Core Premise Section -->
-  <section id="premise">
-    <div class="container">
-      <div class="showcase-grid">
-        <div class="showcase-card">
-          <div class="section-eyebrow">The Premise</div>
-          <h2 class="section-heading">Where code meets conversation.</h2>
-          <p>
-            Your coding agent handles the syntax and writes the code. Vibe Chat holds the conversation around it. Stay in your flow state while your voice steers the agent, reviews diffs, and executes tests in real time.
-          </p>
-        </div>
-        <div class="showcase-img-box">
-          <img src="assets/vibe_chat_flow.png" alt="Voice Conversation Flow Graphic" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cascading Conversation Section -->
-  <section id="conversation">
-    <div class="container">
-      <div class="section-eyebrow">Cascading Conversation</div>
-      <h2 class="section-heading">Just speak while you code.</h2>
-      <p class="section-sub">
-        No window hunting, nothing to type. You speak out loud mid-flow, hands on your keyboard. Vibe Chat delivers crisp, intelligent explanations so you can steer.
-      </p>
-
-      <div class="prompts-grid">
-        <div class="prompt-card">
-          <div class="prompt-quote">"What did the agent just change?"</div>
-          <div class="prompt-action">Reads the live git diff and explains exact modifications across all touched files in human language.</div>
-        </div>
-        <div class="prompt-card">
-          <div class="prompt-quote">"Why did that test fail?"</div>
-          <div class="prompt-action">Executes your test harness in the background and pinpoints the failing assertion line immediately.</div>
-        </div>
-        <div class="prompt-card">
-          <div class="prompt-quote">"Does this match my requirement?"</div>
-          <div class="prompt-action">Cross-references the agent's new edits against your original request to catch missing details.</div>
-        </div>
-        <div class="prompt-card">
-          <div class="prompt-quote">"What should I ask it next?"</div>
-          <div class="prompt-action">Provides one clear, concrete prompt instruction ready for you to paste into your coding agent.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Capabilities Section -->
-  <section id="capabilities">
-    <div class="container">
-      <div class="section-eyebrow">Tools & Access</div>
-      <h2 class="section-heading">One honest surface.</h2>
-      <p class="section-sub">
-        Every capability is controlled by a single switch. Vibe Chat respects your settings instantly — no hidden permissions or guessing what it can access.
-      </p>
-
-      <div class="capabilities-surface">
-        <div class="cap-header">
-          <span>CAPABILITY</span>
-          <span>STATUS</span>
-        </div>
-        <div class="cap-row">
-          <div class="cap-info">
-            <h4>Read the project</h4>
-            <p>Reads code files inside your selected project directory to answer questions with exact context.</p>
-          </div>
-          <div class="sw-toggle active"></div>
-        </div>
-        <div class="cap-row">
-          <div class="cap-info">
-            <h4>Watch the git diff</h4>
-            <p>Monitors line-by-line code changes made by your agent as they occur.</p>
-          </div>
-          <div class="sw-toggle active"></div>
-        </div>
-        <div class="cap-row">
-          <div class="cap-info">
-            <h4>Run test harness</h4>
-            <p>Executes shell build and test commands on request and explains the pass/fail results.</p>
-          </div>
-          <div class="sw-toggle active"></div>
-        </div>
-        <div class="cap-row">
-          <div class="cap-info">
-            <h4>Watch screen windows</h4>
-            <p>Inspects specific application windows (editor, browser preview) only when explicitly asked.</p>
-          </div>
-          <div class="sw-toggle active"></div>
+      <div>
+        <p class="m-tag"><i></i>Reading code you didn't write</p>
+        <h3 class="serif">She designs the product. Today she opened the repo.</h3>
+        <p class="who">A designer at a four-person startup. The agent has been shipping for a week and she wants to understand what's underneath it — not to change it, just to stop nodding at words she doesn't know.</p>
+        <div class="convo">
+          <div class="turn you"><span class="av you">YOU</span><p>What is this file even doing?</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><div>
+            <span class="tool">read_file</span>
+            <p>It's the door everything comes through. Every request hits this file first, and it checks one thing — are you who you say you are — before letting anything past. The three functions below are just three ways of asking that: a password, a token, a link from an email.</p>
+          </div></div>
+          <div class="turn you"><span class="av you">YOU</span><p>What's <em>interface</em> mean, at the top there?</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>A shape, not a thing. It says "anything calling itself a User must have these five fields" — so if the agent ever builds one missing an email, the compiler catches it before you ever run it. It's a promise the code makes to itself.</p></div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- FAQ Section -->
-  <section id="faq">
-    <div class="container">
-      <div class="section-eyebrow">FAQ</div>
-      <h2 class="section-heading">Frequently asked questions.</h2>
-
-      <div class="faq-list">
-        <div class="faq-item open" onclick="this.classList.toggle('open')">
-          <div class="faq-question">What is Vibe Chat? <span>+</span></div>
-          <div class="faq-answer">Vibe Chat is an audio companion app for Mac that listens and speaks while your coding agent works. It tracks diffs, runs test suites, and gives you voice insights to guide your agent.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-          <div class="faq-question">Does Vibe Chat write my code? <span>+</span></div>
-          <div class="faq-answer">No. Your AI coding agent (like Claude) writes the code. Vibe Chat is dedicated to holding the conversation around the code, observing changes, and helping you steer effectively.</div>
-        </div>
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-          <div class="faq-question">Is my code kept private? <span>+</span></div>
-          <div class="faq-answer">Yes. Vibe Chat runs locally on your Mac. It reads code directly from your disk with zero cloud storage of your codebase.</div>
+    <!-- 2 -->
+    <div class="moment">
+      <div class="art">
+        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#161018"/><stop offset="1" stop-color="#05070a"/></linearGradient>
+            <radialGradient id="s2" cx=".5" cy=".4"><stop offset="0" stop-color="#9d8bf0" stop-opacity=".42"/><stop offset="1" stop-color="#9d8bf0" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#g2)"/>
+          <circle cx="200" cy="120" r="150" fill="url(#s2)"/>
+          <!-- git graph as the artwork -->
+          <g stroke="#9d8bf0" stroke-width="2.5" fill="none" opacity=".95">
+            <path d="M80 240 L80 150 Q80 120 110 120 L170 120"/>
+            <path d="M80 150 Q80 96 130 96 L200 96 Q250 96 250 140 L250 190"/>
+            <path d="M170 120 Q250 120 250 165"/>
+          </g>
+          <g fill="#05070a" stroke="#9d8bf0" stroke-width="2.5">
+            <circle cx="80" cy="240" r="9"/><circle cx="80" cy="188" r="9"/><circle cx="130" cy="96" r="9"/>
+            <circle cx="200" cy="96" r="9"/><circle cx="170" cy="120" r="9"/>
+          </g>
+          <circle class="pulse" cx="250" cy="190" r="12" fill="#9d8bf0"/>
+          <g fill="#3a3350"><rect x="292" y="88" width="72" height="5" rx="2.5"/><rect x="292" y="102" width="52" height="5" rx="2.5"/><rect x="292" y="116" width="64" height="5" rx="2.5"/></g>
+          <!-- figure silhouette, small, contemplating -->
+          <g fill="#120e18"><ellipse cx="330" cy="215" rx="19" ry="21"/><path d="M296 300c0-38 16-64 34-64s34 26 34 64z"/></g>
+          <path d="M348 205c3 6 4 14 2 22" stroke="#9d8bf0" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+        </svg>
+      </div>
+      <div>
+        <p class="m-tag"><i></i>Git, finally</p>
+        <h3 class="serif">He's been copying commands off a sticky note for two years.</h3>
+        <p class="who">A self-taught developer who ships fine until git goes sideways. He knows the four commands that usually work and has no picture of what any of them do.</p>
+        <div class="convo">
+          <div class="turn you"><span class="av you">YOU</span><p>It says my branch and origin have diverged. I don't know what that means and I'm scared to type anything.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><div>
+            <span class="tool">git_summary</span>
+            <p>You both wrote. You made two commits here; someone pushed one to the server. Neither is wrong — they're just two versions of the story that split at the same point. Nothing is lost, and nothing is broken.</p>
+          </div></div>
+          <div class="turn you"><span class="av you">YOU</span><p>So what do I actually type?</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>Rebase. It takes your two commits off, replays theirs, then puts yours back on top — so the story reads in one line instead of a fork. <em>git pull --rebase</em>. If it stops and asks you about a file, that's a conflict, and I'll walk you through that one when we get there.</p></div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Closing Call to Action -->
-  <section class="cta-section">
-    <div class="container">
-      <h2 class="section-heading">The conversation around the code.</h2>
-      <p class="section-sub" style="margin: 0 auto 36px;">Experience the voice companion built for developers working with AI coding agents.</p>
-      <a href="https://github.com/richie-iris/iris-site/releases/download/v0.1.1/Spotter-0.1.1-arm64.dmg" class="btn-primary">Download Vibe Chat for Mac</a>
+    <!-- 3 -->
+    <div class="moment">
+      <div class="art">
+        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1418"/><stop offset="1" stop-color="#05070a"/></linearGradient>
+            <radialGradient id="s3" cx=".5" cy=".3"><stop offset="0" stop-color="#8fd68a" stop-opacity=".34"/><stop offset="1" stop-color="#8fd68a" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#g3)"/>
+          <circle cx="200" cy="90" r="150" fill="url(#s3)"/>
+          <!-- terminal streaming -->
+          <rect x="46" y="46" width="308" height="176" rx="9" fill="#070d11" stroke="#1b2b32"/>
+          <g fill="#1f3a42"><circle cx="63" cy="62" r="4"/><circle cx="77" cy="62" r="4"/><circle cx="91" cy="62" r="4"/></g>
+          <g fill="#8fd68a" opacity=".9"><rect x="62" y="84" width="8" height="5" rx="2"/><rect x="62" y="98" width="8" height="5" rx="2"/><rect x="62" y="112" width="8" height="5" rx="2"/><rect x="62" y="126" width="8" height="5" rx="2"/></g>
+          <g fill="#24424c"><rect x="78" y="84" width="152" height="5" rx="2.5"/><rect x="78" y="98" width="196" height="5" rx="2.5"/><rect x="78" y="112" width="122" height="5" rx="2.5"/><rect x="78" y="126" width="174" height="5" rx="2.5"/><rect x="78" y="140" width="98" height="5" rx="2.5"/><rect x="78" y="154" width="146" height="5" rx="2.5"/><rect x="78" y="168" width="112" height="5" rx="2.5"/></g>
+          <rect x="78" y="182" width="10" height="11" fill="#8fd68a" class="pulse"/>
+          <!-- watching eye/reticle over it -->
+          <g transform="translate(300,232)">
+            <circle r="26" fill="#05070a" stroke="#4fc3e8" stroke-width="1.5" opacity=".55"/>
+            <g class="sweep"><circle r="34" fill="none" stroke="#4fc3e8" stroke-width="1.5" stroke-dasharray="4 10" opacity=".55"/></g>
+            <circle class="pulse" r="9" fill="#7fdcf7"/>
+          </g>
+          <g fill="#0d1a1e"><ellipse cx="76" cy="256" rx="16" ry="18"/><path d="M48 300c0-30 12-52 28-52s28 22 28 52z"/></g>
+        </svg>
+      </div>
+      <div>
+        <p class="m-tag"><i></i>Watching the agent work</p>
+        <h3 class="serif">She let it run for forty minutes. It touched nine files.</h3>
+        <p class="who">A backend engineer who uses an agent the way you'd use a very fast junior — productive, occasionally confident about the wrong thing. She wants to know what changed without reading nine diffs.</p>
+        <div class="convo">
+          <div class="turn you"><span class="av you">YOU</span><p>What did it just change?</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><div>
+            <span class="tool">git_summary</span>
+            <p>Nine files. Eight are the rename you asked for. The ninth isn't — it rewrote the retry logic in the payments client and dropped the backoff. You didn't ask for that.</p>
+          </div></div>
+          <div class="turn you"><span class="av you">YOU</span><p>Wait, show me.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>Line 41. It was doubling the wait each attempt, capped at thirty seconds. Now it retries five times in a tight loop. Against a rate-limited API that turns one failure into five. Everything else in the diff is clean.</p></div>
+          <div class="turn you"><span class="av you">YOU</span><p>Tell it to put the backoff back.</p></div>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div>&copy; 2026 Vibe Chat · All rights reserved.</div>
-    <div>Built for macOS · Apple Silicon</div>
-  </footer>
+    <!-- 4 -->
+    <div class="moment">
+      <div class="art">
+        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a1113"/><stop offset="1" stop-color="#05070a"/></linearGradient>
+            <radialGradient id="s4" cx=".5" cy=".45"><stop offset="0" stop-color="#e8798a" stop-opacity=".34"/><stop offset="1" stop-color="#e8798a" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#g4)"/>
+          <circle cx="200" cy="140" r="150" fill="url(#s4)"/>
+          <!-- test grid: many pass, one fails -->
+          <g>
+            <g fill="#8fd68a" opacity=".82">
+              <rect x="70" y="80" width="20" height="20" rx="5"/><rect x="100" y="80" width="20" height="20" rx="5"/><rect x="130" y="80" width="20" height="20" rx="5"/><rect x="160" y="80" width="20" height="20" rx="5"/><rect x="190" y="80" width="20" height="20" rx="5"/><rect x="220" y="80" width="20" height="20" rx="5"/><rect x="250" y="80" width="20" height="20" rx="5"/><rect x="280" y="80" width="20" height="20" rx="5"/>
+              <rect x="70" y="110" width="20" height="20" rx="5"/><rect x="100" y="110" width="20" height="20" rx="5"/><rect x="130" y="110" width="20" height="20" rx="5"/><rect x="160" y="110" width="20" height="20" rx="5"/><rect x="220" y="110" width="20" height="20" rx="5"/><rect x="250" y="110" width="20" height="20" rx="5"/><rect x="280" y="110" width="20" height="20" rx="5"/>
+              <rect x="70" y="140" width="20" height="20" rx="5"/><rect x="100" y="140" width="20" height="20" rx="5"/><rect x="130" y="140" width="20" height="20" rx="5"/><rect x="160" y="140" width="20" height="20" rx="5"/><rect x="190" y="140" width="20" height="20" rx="5"/><rect x="220" y="140" width="20" height="20" rx="5"/><rect x="250" y="140" width="20" height="20" rx="5"/><rect x="280" y="140" width="20" height="20" rx="5"/>
+            </g>
+            <rect x="190" y="110" width="20" height="20" rx="5" fill="#e8798a" class="pulse"/>
+            <circle cx="200" cy="120" r="30" fill="none" stroke="#e8798a" stroke-width="1.5" opacity=".55"/>
+            <g class="sweep" style="transform-origin:200px 120px"><circle cx="200" cy="120" r="40" fill="none" stroke="#e8798a" stroke-width="1.5" stroke-dasharray="4 11" opacity=".5"/></g>
+          </g>
+          <g fill="#2a1a1e"><rect x="70" y="196" width="120" height="6" rx="3"/><rect x="70" y="212" width="86" height="6" rx="3"/></g>
+          <g fill="#181014"><ellipse cx="320" cy="228" rx="18" ry="20"/><path d="M288 300c0-34 14-58 32-58s32 24 32 58z"/></g>
+          <path d="M337 218c3 6 4 14 2 22" stroke="#e8798a" stroke-width="2.5" stroke-linecap="round" opacity=".65"/>
+        </svg>
+      </div>
+      <div>
+        <p class="m-tag"><i></i>Testing what the agent built</p>
+        <h3 class="serif">"It says it's done." That's not the same as done.</h3>
+        <p class="who">A solo founder shipping to real customers. The agent always reports success. He needs someone who checks — every time, without being asked twice.</p>
+        <div class="convo">
+          <div class="turn you"><span class="av you">YOU</span><p>Run the tests.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><div>
+            <span class="tool">run_shell_command</span>
+            <p>Twenty-three pass, one fails — the checkout timeout test, three seconds over.</p>
+          </div></div>
+          <div class="turn you"><span class="av you">YOU</span><p>Is that the test or my code?</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><div>
+            <span class="tool">read_file</span>
+            <p>Your code. The test allows five seconds and always did. The agent added a second database call inside the loop, so it's making one query per item instead of one for all of them. Eleven items today, eleven queries. It'll get worse with real carts, not better.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
 
+    <!-- 5 -->
+    <div class="moment">
+      <div class="art">
+        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#181206"/><stop offset="1" stop-color="#05070a"/></linearGradient>
+            <radialGradient id="s5" cx=".3" cy=".5"><stop offset="0" stop-color="#f0a868" stop-opacity=".36"/><stop offset="1" stop-color="#f0a868" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#g5)"/>
+          <circle cx="130" cy="150" r="150" fill="url(#s5)"/>
+          <!-- lone desk lamp glow, late night -->
+          <path d="M40 300 L74 122 L106 122 L140 300Z" fill="#f0a868" opacity=".07"/>
+          <rect x="60" y="106" width="60" height="16" rx="7" fill="#1b1409"/>
+          <circle class="pulse" cx="90" cy="122" r="6" fill="#f0a868"/>
+          <!-- stack trace -->
+          <g fill="#4a3620"><rect x="176" y="96" width="150" height="5" rx="2.5"/><rect x="186" y="110" width="128" height="5" rx="2.5"/><rect x="186" y="124" width="140" height="5" rx="2.5"/><rect x="186" y="138" width="104" height="5" rx="2.5"/><rect x="186" y="152" width="132" height="5" rx="2.5"/></g>
+          <rect x="176" y="82" width="112" height="5" rx="2.5" fill="#f0a868"/>
+          <rect x="186" y="124" width="140" height="5" rx="2.5" fill="#4fc3e8" opacity=".9"/>
+          <!-- figure head in hands -->
+          <g fill="#141008"><ellipse cx="96" cy="216" rx="21" ry="23"/><path d="M58 300c0-40 17-68 38-68s38 28 38 68z"/></g>
+          <path d="M115 206c3 7 4 16 2 25" stroke="#f0a868" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+          <g transform="translate(330,236)"><circle class="pulse" r="8" fill="#7fdcf7"/><circle r="17" fill="none" stroke="#4fc3e8" stroke-width="1.5" opacity=".4"/></g>
+        </svg>
+      </div>
+      <div>
+        <p class="m-tag"><i></i>The error at one in the morning</p>
+        <h3 class="serif">Forty lines of red. None of them say what's wrong.</h3>
+        <p class="who">A student two weeks into her first real project, at the point most people quit — where the error is long, the internet's answers don't match, and there's nobody awake to ask.</p>
+        <div class="convo">
+          <div class="turn you"><span class="av you">YOU</span><p>I don't even know how to read this.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><div>
+            <span class="tool">deep_read_screen</span>
+            <p>Start at the bottom — that's where it actually broke. Everything above is just how it got there. The bottom line says <em>cannot read 'name' of undefined</em>, in your profile component, line 24.</p>
+          </div></div>
+          <div class="turn you"><span class="av you">YOU</span><p>But the user definitely exists.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>It does — half a second later than you're asking. The page draws before the fetch comes back, so on that first pass there's nothing there yet. It's not wrong, it's early. You want line 24 to say "if we have a user, draw the name" — and the whole error goes away.</p></div>
+          <div class="turn you"><span class="av you">YOU</span><p>…that worked.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">What it can do</p>
+    <h2 class="serif">Four things, done well.</h2>
+    <p class="sec-lede">Every one of them is a switch in your panel. Turn one off and it's genuinely off — Spotter isn't told the tool exists.</p>
+    <div class="cards">
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3e8" stroke-width="1.6"><circle cx="12" cy="12" r="3.2"/><path d="M1.8 12S5 5.5 12 5.5 22.2 12 22.2 12 19 18.5 12 18.5 1.8 12 1.8 12Z"/></svg>
+        <h4>Watch the screen</h4>
+        <p>Reads your terminal, your editor, an error too small to squint at. Can keep an eye on one window and speak up the moment a build finishes or a test goes red.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3e8" stroke-width="1.6"><path d="M4 4h9l7 7v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M13 4v7h7"/></svg>
+        <h4>Read your project</h4>
+        <p>Opens files, searches the codebase, and reads the git history — so "what changed" is answered from the diff, not from a guess.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3e8" stroke-width="1.6"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+        <h4>Run commands</h4>
+        <p>Your tests, your build, your linter, git. Then the result in a clause — how many passed, and the first one that actually matters. Destructive commands get read back first.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3e8" stroke-width="1.6"><path d="M12 3a4 4 0 0 1 4 4v1a3 3 0 0 1 0 6v3a4 4 0 0 1-8 0v-3a3 3 0 0 1 0-6V7a4 4 0 0 1 4-4Z"/></svg>
+        <h4>Remember the project</h4>
+        <p>The decisions you made, the conventions you hold, what you were in the middle of. You don't re-explain your project every morning.</p>
+      </div>
+    </div>
+
+    <div class="states">
+      <div class="state"><img src="assets/states/listening.png" alt=""><span>listening</span></div>
+      <div class="state"><img src="assets/states/thinking.png" alt=""><span>thinking</span></div>
+      <div class="state"><img src="assets/states/speaking.png" alt=""><span>speaking</span></div>
+      <div class="state"><img src="assets/states/watching.png" alt=""><span>watching</span></div>
+      <div class="state"><img src="assets/states/muted.png" alt=""><span>muted</span></div>
+      <div class="state"><img src="assets/states/asleep.png" alt=""><span>asleep</span></div>
+    </div>
+    <p style="text-align:center;margin-top:20px;color:var(--mut);font-size:.88rem">It lives in the menu bar. One glance tells you what it's doing.</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Plainly</p>
+    <h2 class="serif">What it is, and what it isn't.</h2>
+    <div class="plain">
+      <div>
+        <h4>It doesn't write your code</h4>
+        <p>Your agent does that. Spotter watches, checks, and explains. It can edit and commit when you ask it to — but that's not what it's for.</p>
+      </div>
+      <div>
+        <h4>You hold every switch</h4>
+        <p>Watching, reading, running, typing for you — each is a toggle, and typing is off until you turn it on. A capability that's off isn't offered to the model at all.</p>
+      </div>
+      <div>
+        <h4>Memory stays on your Mac</h4>
+        <p>What it learns about your project is stored in a local database you can open and delete. To index a screenshot it captures, it sends that image to Google's vision model — that part isn't local, and you can switch memory off entirely.</p>
+      </div>
+      <div>
+        <h4>It's early</h4>
+        <p>Version 0.1.2, Apple silicon only, signed and notarized. Free to start. It will get things wrong, and it's built to tell you when it doesn't know.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="get">
+  <div class="halo"></div>
+  <div class="wrap">
+    <h2 class="serif" style="font-size:clamp(2.2rem,5.2vw,3.5rem)">Nobody should build alone<br>with something they can't read.</h2>
+    <p class="lede" style="margin-top:24px">Put a spotter beside you.</p>
+    <div class="cta-row">
+      <a class="btn btn-p" href="https://github.com/richie-iris/iris-site/releases/download/v0.1.2/Spotter-0.1.2-arm64.dmg">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4l-4.7-5.7 1.4-1.4 3.3 3.3V3z"/><path d="M4 19h16v2H4z"/></svg>
+        Download for Mac
+      </a>
+    </div>
+    <p class="meta"><b>Free to start.</b> macOS on Apple silicon · signed &amp; notarized · v0.1.2</p>
+  </div>
+</section>
+
+<footer><div class="wrap foot-in">
+  <span>Spotter — the voice that watches while you build.</span>
+  <span>Made for people building with agents.</span>
+</div></footer>
+
+<script>
+  const n=document.getElementById('nav');
+  const onScroll=()=>n.classList.toggle('scrolled',window.scrollY>12);
+  onScroll();addEventListener('scroll',onScroll,{passive:true});
+</script>
 </body>
 </html>
