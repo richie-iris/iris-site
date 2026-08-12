@@ -37,9 +37,18 @@ nav.scrolled{border-bottom-color:var(--line)}
 .nav-in{max-width:var(--max);margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:-.01em;text-decoration:none;font-size:1.02rem}
 .brand svg{width:26px;height:26px;flex:none}
+.nav-cta{font-size:.88rem;font-weight:600;text-decoration:none;padding:9px 17px;border-radius:999px;
+  background:var(--tl);color:#FFFFFF;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(15,118,110,.32)}
 
 /* ---------- hero ---------- */
-header{position:relative;padding:190px 0 120px;overflow:hidden}
+/* The hero is measured against the window, not against a number. Fixed padding
+   made it 962px tall in a 900px viewport, so the version line under the buttons
+   fell below the fold on an ordinary laptop. min-height + centring pins it to
+   one screen; the vh terms in the rhythm below let it compress on short windows
+   instead of overflowing them. */
+header{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;
+  padding:clamp(88px,13vh,150px) 0 clamp(44px,7vh,92px)}
 .halo{position:absolute;left:50%;top:-8%;width:1150px;height:1150px;transform:translateX(-50%);
   background:radial-gradient(circle,rgba(15,118,110,.17) 0%,rgba(15,118,110,.06) 32%,transparent 66%);
   pointer-events:none;z-index:0}
@@ -48,13 +57,13 @@ header{position:relative;padding:190px 0 120px;overflow:hidden}
   background-size:64px 64px;
   mask-image:radial-gradient(ellipse 78% 58% at 50% 32%,#000 20%,transparent 72%);
   -webkit-mask-image:radial-gradient(ellipse 78% 58% at 50% 32%,#000 20%,transparent 72%)}
-header .wrap{position:relative;z-index:1;text-align:center}
-.reticle{width:118px;height:118px;margin:0 auto 40px;display:block}
-.eyebrow{font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--tl);font-weight:600;margin-bottom:26px}
+header .wrap{position:relative;z-index:1;text-align:center;width:100%}
+.reticle{width:clamp(78px,10.5vh,118px);height:auto;aspect-ratio:1;margin:0 auto clamp(18px,3.6vh,40px);display:block}
+.eyebrow{font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--tl);font-weight:600;margin-bottom:clamp(14px,2.4vh,26px)}
 h1{font-size:clamp(2.9rem,7.4vw,5.4rem);line-height:1.03;letter-spacing:-.035em;font-weight:400;color:var(--ink)}
 h1 em{font-style:normal;color:var(--tl);position:relative;white-space:nowrap}
-.lede{max-width:640px;margin:30px auto 0;font-size:clamp(1.06rem,2.1vw,1.28rem);color:var(--mut);line-height:1.6}
-.cta-row{margin-top:44px;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+.lede{max-width:640px;margin:clamp(16px,2.8vh,30px) auto 0;font-size:clamp(1.06rem,2.1vw,1.28rem);color:var(--mut);line-height:1.6}
+.cta-row{margin-top:clamp(22px,3.6vh,44px);display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;
   padding:15px 30px;border-radius:999px;font-size:1rem;transition:transform .2s,box-shadow .2s,background .2s}
 .btn-p{background:var(--tl);color:#FFFFFF;box-shadow:0 10px 34px rgba(15,118,110,.24)}
@@ -145,10 +154,21 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
 .foot-in{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
 
 @media(max-width:880px){
-  header{padding:150px 0 84px}
+  header{min-height:100svh;padding:clamp(84px,12vh,140px) 0 clamp(36px,6vh,72px)}
   section{padding:80px 0}
   .moment{grid-template-columns:1fr;gap:34px;padding:56px 0}
   .moment:nth-child(even) .art{order:0}
+}
+/* Phones. The hero costs 56px more than it has here: the eyebrow wraps to two
+   lines, the lede runs to six, and the buttons stack. Tightening those three
+   buys back more than the overflow, so the version line stays above the fold
+   on a 812px phone instead of being clipped by it. */
+@media(max-width:520px){
+  header{padding:clamp(74px,9vh,104px) 0 clamp(28px,4vh,52px)}
+  .eyebrow{font-size:.7rem;letter-spacing:.14em;margin-bottom:clamp(10px,1.8vh,18px)}
+  .lede{font-size:1rem;line-height:1.5}
+  .cta-row{gap:10px}
+  .meta{margin-top:13px}
 }
 @media(prefers-reduced-motion:no-preference){
   .pulse{animation:pulse 3.4s ease-in-out infinite}
@@ -173,6 +193,7 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
     </svg>
     Spotter
   </a>
+  <a class="nav-cta" href="#get">Download for Mac</a>
 </div></nav>
 
 <header id="top">
