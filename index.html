@@ -418,7 +418,7 @@ worker.ts imports the type you narrowed.</pre>
         <div class="convo">
           <div class="turn sp"><span class="av sp">◎</span><p>Forcing prompt's on your clipboard — it makes the agent read the two callers it skipped and put the backoff back with a test to hold it.</p></div>
           <div class="turn you"><span class="av you">YOU</span><p>Just fix it.</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><p>On it. Anything destructive, I'll read back to you first.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>On it — editing and running for real. Say "safe mode" if you want me to stop touching anything.</p></div>
         </div>
       </div>
     </div>
@@ -523,7 +523,7 @@ worker.ts imports the type you narrowed.</pre>
         <p>Every token both agents spent, divided by what actually merged. If Spotter doesn't pay for itself on this line, you'll see that too.</p>
       </div>
     </div>
-    <p class="proof-note"><b>Nothing leaves your Mac to make these numbers.</b> No telemetry, no dashboard in someone else's cloud — the proof is computed locally from your own history, and it's allowed to embarrass us.</p>
+    <p class="proof-note"><b>The numbers are counted on your Mac, not on ours.</b> No telemetry, no dashboard in someone else's cloud — the scoreboard is computed locally from your own git history, and it's allowed to embarrass us. Running a review is different, and we'd rather say it than bury it: that sends your diff and the files around it to whichever model is doing the thinking.</p>
   </div>
 </section>
 
@@ -548,7 +548,7 @@ worker.ts imports the type you narrowed.</pre>
       <div class="card">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
         <h4>Run commands</h4>
-        <p>Your tests, your build, your linter, git. Then the result in a clause — how many passed, and the first one that actually matters. Destructive commands get read back first.</p>
+        <p>Your tests, your build, your linter, git. Then the result in a clause — how many passed, and the first one that actually matters. She runs what you ask, including things that change your machine; Safe Mode is the switch that stops that.</p>
       </div>
       <div class="card">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M12 3a4 4 0 0 1 4 4v1a3 3 0 0 1 0 6v3a4 4 0 0 1-8 0v-3a3 3 0 0 1 0-6V7a4 4 0 0 1 4-4Z"/></svg>
@@ -578,7 +578,7 @@ worker.ts imports the type you narrowed.</pre>
     <div class="plain">
       <div>
         <h4>It doesn't write your features</h4>
-        <p>Your agent does that. Spotter catches what the agent structurally can't see. When you say "just fix it," Spotter applies its own review with its own hands — and anything destructive gets read back to you first, every time, no setting turns that off.</p>
+        <p>Your agent does that. Spotter catches what the agent structurally can't see. When you say "just fix it," Spotter applies its own review with its own hands — really editing and really running things, without stopping to ask each time. That's the point of it, and it's the thing to know before you install: Safe Mode is the switch that stops anything from changing your Mac.</p>
       </div>
       <div>
         <h4>You hold every switch</h4>
@@ -586,11 +586,11 @@ worker.ts imports the type you narrowed.</pre>
       </div>
       <div>
         <h4>Memory stays on your Mac</h4>
-        <p>What it learns lives in a local database you can open, export, and delete. One asterisk, stated plainly: indexing a screenshot sends that image to Google's vision model. You can switch memory off entirely — and the all-local road is the one we're paving.</p>
+        <p>What it learns lives in a local database you can open, export, and delete. Two things do leave, and Spotter always names where they go: indexing a screenshot sends that image to Google's vision model, and running a review sends your diff and the files around it to whichever model is thinking — Anthropic on your own key, the model we're paying for on ours, or nothing at all once it's running locally. Whichever it is, the panel says so by name. You can switch memory off entirely, and the all-local road is the one we're paving.</p>
       </div>
       <div>
         <h4>The multiplier is measured</h4>
-        <p>Free to start, your own keys always unmetered, and the 10× claim runs against a shadow baseline on your own machine. It's early — v0.8.6, Apple silicon, signed and notarized — and it's built to tell you when it doesn't know.</p>
+        <p>Free to start, and a paid plan is coming — models cost real money, and we'd rather charge for them than pretend otherwise. Your own keys stay unmetered either way. It's early — v0.8.6, Apple silicon, signed and notarized — and it's built to tell you when it doesn't know.</p>
       </div>
     </div>
   </div>
