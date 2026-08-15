@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Spotter — the voice that watches while you build</title>
-<meta name="description" content="A spotter watches while you lift. Spotter watches while your coding agent writes — reading the diff, running the tests, and telling you in plain speech what just changed.">
+<title>Spotter — turn your coding agent into a 10× programmer</title>
+<meta name="description" content="A coding agent isn't lazy on purpose — it fails in ten structural ways, and it fails the same ways every time. Spotter knows them in advance, catches them before you ship, and proves the difference with numbers from your own git history.">
 <link rel="icon" href="assets/favicon.png">
-<meta property="og:title" content="Spotter — the voice that watches while you build">
-<meta property="og:description" content="The agent writes. Spotter watches, tests, and explains — out loud.">
+<meta property="og:title" content="Spotter — turn your coding agent into a 10× programmer">
+<meta property="og:description" content="The agent writes. Spotter catches what it structurally can't see — and puts the fix on your clipboard.">
 <meta property="og:image" content="assets/spotter.png">
 <style>
 :root{
@@ -85,11 +85,27 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .idea .big{font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:1.42;letter-spacing:-.02em;font-weight:400}
 .idea .big span{color:var(--tl)}
 .idea p{margin-top:26px;color:var(--mut);font-size:1.06rem;max-width:600px;margin-left:auto;margin-right:auto}
+.mathline{margin:44px auto 0;display:inline-flex;align-items:baseline;gap:18px;flex-wrap:wrap;justify-content:center;
+  font-size:clamp(1.3rem,3vw,1.9rem);letter-spacing:-.02em;color:var(--ink)}
+.mathline b{font-weight:400;color:var(--tl);font-size:clamp(1.9rem,4.4vw,2.9rem)}
+.mathline s{text-decoration:line-through;color:var(--dim);font-size:.8em}
 
-/* ---------- moments ---------- */
+/* ---------- weakness map ---------- */
+.fams{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:52px}
+.fam{border:1px solid var(--line);border-radius:15px;background:var(--paper);padding:26px 24px}
+.fam h4{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.fam .fam-sub{font-size:.85rem;color:var(--mut);margin-bottom:18px}
+.wk{padding:11px 0;border-top:1px solid rgba(42,46,51,.07)}
+.wk i{font-style:normal;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.7rem;color:var(--tl);
+  background:rgba(15,118,110,.08);border:1px solid rgba(15,118,110,.2);border-radius:5px;padding:1px 6px;margin-right:8px}
+.wk b{font-weight:600;font-size:.93rem;color:var(--ink)}
+.wk p{margin-top:4px;font-size:.86rem;color:var(--mut);line-height:1.55}
+
+/* ---------- moments / moves ---------- */
 .moment{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center;padding:74px 0;border-top:1px solid var(--line)}
+.moment:first-of-type{border-top:0}
 .moment:nth-child(even) .art{order:2}
-.art{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--cream2);aspect-ratio:4/3}
+.art{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--cream2)}
 .art svg{width:100%;height:100%;display:block}
 .m-tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;
   font-weight:600;color:var(--mut);margin-bottom:15px}
@@ -112,6 +128,15 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
   font-size:.75rem;color:var(--tl);background:rgba(15,118,110,.08);border:1px solid rgba(15,118,110,.2);
   padding:2px 8px;border-radius:5px;margin-bottom:7px}
 
+/* forcing-prompt specimen */
+.spec{border:1px solid rgba(15,118,110,.35);border-radius:14px;background:var(--paper);overflow:hidden;margin-top:26px}
+.spec-bar{display:flex;align-items:center;gap:9px;padding:10px 16px;border-bottom:1px solid var(--line);
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--tl)}
+.spec-bar svg{width:14px;height:14px}
+.spec pre{padding:18px 20px;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.82rem;line-height:1.7;
+  color:var(--fg);white-space:pre-wrap;word-break:break-word}
+.spec pre b{color:var(--tl);font-weight:600}
+
 /* ---------- capability cards ---------- */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:18px;margin-top:52px}
 .card{border:1px solid var(--line);border-radius:15px;padding:28px 24px;background:linear-gradient(180deg,rgba(42,46,51,.028),transparent);
@@ -120,6 +145,14 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .card svg{width:27px;height:27px;margin-bottom:17px}
 .card h4{font-size:1.05rem;font-weight:600;margin-bottom:9px;letter-spacing:-.01em}
 .card p{color:var(--mut);font-size:.93rem;line-height:1.6}
+
+/* ---------- proof numbers ---------- */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:52px}
+.num{border:1px solid var(--line);border-radius:15px;padding:28px 24px;background:var(--paper)}
+.num .n-name{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);margin-bottom:9px}
+.num p{color:var(--mut);font-size:.92rem;line-height:1.62}
+.proof-note{margin-top:34px;text-align:center;color:var(--mut);font-size:.95rem;max-width:640px;margin-left:auto;margin-right:auto}
+.proof-note b{color:var(--fg);font-weight:600}
 
 /* ---------- states strip ---------- */
 .states{display:flex;gap:14px;flex-wrap:wrap;margin-top:44px;justify-content:center}
@@ -220,19 +253,19 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
       <circle class="pulse" cx="100" cy="100" r="19" fill="url(#core)" filter="url(#glow)"/>
     </svg>
 
-    <p class="eyebrow">For anyone building with an AI agent</p>
-    <h1 class="serif">The agent writes.<br><em>Spotter watches.</em></h1>
+    <p class="eyebrow">The counter-agent, for anyone building with an AI agent</p>
+    <h1 class="serif">The agent writes.<br><em>Spotter catches.</em></h1>
     <p class="lede">
-      A spotter is the person who stands beside you while you lift something heavy.
-      They don't lift it for you. They watch, they catch what's about to fall, and they
-      tell you what they see — out loud, while it matters.
+      A spotter doesn't lift. A spotter knows exactly how a lift fails — the grip, the elbow,
+      the moment confidence outruns form — and is watching for it before the bar moves.
+      Coding agents fail the same ten ways, every time. Spotter knows them in advance.
     </p>
     <div class="cta-row">
       <a class="btn btn-p" href="https://github.com/richie-iris/iris-site/releases/download/v0.8.6/Spotter-0.8.6-arm64.dmg">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4l-4.7-5.7 1.4-1.4 3.3 3.3V3z"/><path d="M4 19h16v2H4z"/></svg>
         Download for Mac
       </a>
-      <a class="btn btn-s" href="#moments">See it in use</a>
+      <a class="btn btn-s" href="#review">See the review</a>
     </div>
     <p class="meta"><b>Free to start.</b> macOS, Apple silicon · signed &amp; notarized · v0.8.6</p>
   </div>
@@ -243,157 +276,117 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
 <section>
   <div class="wrap idea">
     <p class="big serif">
-      You can now ask an agent to write code you couldn't have written yourself.
-      Nobody solved the harder half — <span>knowing whether it's any good.</span>
+      A coding agent isn't lazy on purpose. It reads part of the code, believes its own
+      green checkmarks, and forgets everything by morning —
+      <span>structurally, not occasionally.</span>
     </p>
     <p>
-      Spotter sits in your menu bar and watches the same screen you're watching. It reads the diff the
-      agent just produced, runs the tests, opens the files, and tells you what actually happened — in
-      a sentence, in plain speech, while you're still looking at it. You stay the one deciding.
-      You just stop deciding blind.
+      More prompting doesn't fix a structural weakness. A second pair of eyes that knows the
+      weakness in advance does. Spotter sits in your menu bar, watches the same repo your agent
+      is working in, and hunts for exactly the mistakes agents make — out loud, in a sentence,
+      while the diff is still warm.
+    </p>
+    <div class="mathline serif" aria-label="One coding agent plus one Spotter is not two, it is ten x">
+      <span>1 agent + 1 Spotter</span><s>= 2</s><b>= 10×</b>
+    </div>
+    <p style="margin-top:18px">
+      The multiplier isn't more code written. It's the rework that never ships.
     </p>
   </div>
 </section>
 
-<section id="moments" style="padding-top:20px">
-  <div class="wrap">
-    <p class="kicker">Five moments</p>
-    <h2 class="serif">What it sounds like<br>to not be alone with the agent.</h2>
-    <p class="sec-lede">Five situations Spotter was built for. The people are illustrations, not customers — the exchanges are the kind of thing it actually says.</p>
+<div class="wrap"><div class="rule"></div></div>
 
-    <!-- 1 -->
+<section id="weaknesses">
+  <div class="wrap">
+    <p class="kicker">The weakness map</p>
+    <h2 class="serif">Ten ways agents fail.<br>Spotter knows them cold.</h2>
+    <p class="sec-lede">This map ships inside Spotter — not learned per session, known before the session starts. And it stays alive: every time you correct your agent, Spotter remembers the correction as one more thing to watch for.</p>
+    <div class="fams">
+      <div class="fam">
+        <h4>Context gaps</h4>
+        <p class="fam-sub">It didn't read enough before it wrote.</p>
+        <div class="wk"><i>A1</i><b>Partial reads</b><p>Edits a function it read; never opens the callers. Spotter reads what it skipped.</p></div>
+        <div class="wk"><i>A2</i><b>Stale priors</b><p>Writes from how libraries worked at training time, not how your repo works now.</p></div>
+        <div class="wk"><i>A3</i><b>Cross-file inconsistency</b><p>Changes a contract in one file and honors it in none of the others.</p></div>
+      </div>
+      <div class="fam">
+        <h4>Completion gaps</h4>
+        <p class="fam-sub">"Done" and done are different claims.</p>
+        <div class="wk"><i>B1</i><b>Green check ≠ done</b><p>Passes the tests it ran, not the ones that matter. Spotter runs the rest.</p></div>
+        <div class="wk"><i>B2</i><b>Stubs &amp; TODOs</b><p>Ships the scaffolding and reports the building. Spotter counts what's hollow.</p></div>
+        <div class="wk"><i>B3</i><b>Narrow verification</b><p>Verifies the happy path, in one file, once. Spotter runs the full suite, the build, the type-check.</p></div>
+      </div>
+      <div class="fam">
+        <h4>Memory gaps</h4>
+        <p class="fam-sub">Every session starts from zero.</p>
+        <div class="wk"><i>C1</i><b>Session amnesia</b><p>Yesterday's decisions, this morning's blank stare. Spotter's memory is local and permanent.</p></div>
+        <div class="wk"><i>C2</i><b>No cross-repo thread</b><p>Fixes a bug in one repo, re-ships it in the next. Spotter watches all of them.</p></div>
+      </div>
+      <div class="fam">
+        <h4>Scope &amp; craft gaps</h4>
+        <p class="fam-sub">It did more than you asked, worse.</p>
+        <div class="wk"><i>D1</i><b>Scope drift</b><p>You asked for a rename; it rewrote the retry logic. Spotter separates asked from unasked.</p></div>
+        <div class="wk"><i>D2</i><b>Style drift &amp; stale docs</b><p>Code that ignores your conventions, docs a change just made false. Spotter flags both.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="review" style="padding-bottom:40px">
+  <div class="wrap">
+    <p class="kicker">The review, in three moves</p>
+    <h2 class="serif">Say "spot check."<br>Get back what the agent missed.</h2>
+    <p class="sec-lede">Trigger it by voice or from the panel — or let Spotter offer one when it notices the agent has gone quiet. Every claim in a review names its evidence: a file and a line, or the output of a command it just ran.</p>
+
     <div class="moment">
-      <div class="art">
+      <div class="art" style="aspect-ratio:4/3">
         <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
           <defs>
             <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDFBF7"/><stop offset="1" stop-color="#F7F3EA"/></linearGradient>
-            <radialGradient id="s1" cx=".62" cy=".38"><stop offset="0" stop-color="#0F766E" stop-opacity=".5"/><stop offset="1" stop-color="#0F766E" stop-opacity="0"/></radialGradient>
+            <radialGradient id="s1" cx=".5" cy=".4"><stop offset="0" stop-color="#0F766E" stop-opacity=".42"/><stop offset="1" stop-color="#0F766E" stop-opacity="0"/></radialGradient>
           </defs>
           <rect width="400" height="300" fill="url(#g1)"/>
-          <circle cx="248" cy="114" r="130" fill="url(#s1)"/>
-          <!-- monitor -->
-          <rect x="196" y="62" width="150" height="102" rx="7" fill="#FFFFFF" stroke="#E8E0D0"/>
-          <g fill="#DCD3C0"><rect x="208" y="78" width="62" height="5" rx="2.5"/><rect x="208" y="91" width="94" height="5" rx="2.5"/><rect x="216" y="104" width="76" height="5" rx="2.5"/><rect x="216" y="117" width="52" height="5" rx="2.5"/><rect x="208" y="130" width="88" height="5" rx="2.5"/></g>
-          <rect x="208" y="91" width="94" height="5" rx="2.5" fill="#0F766E" opacity=".85"/>
-          <rect x="258" y="164" width="26" height="16" fill="#F7F3EA"/><rect x="232" y="180" width="78" height="6" rx="3" fill="#F4EFE4"/>
-          <!-- figure, seated, back to us -->
-          <g fill="#F7F3EA">
-            <ellipse cx="112" cy="118" rx="27" ry="30"/>
-            <path d="M60 300c0-52 24-88 52-88s52 36 52 88z"/>
+          <circle cx="200" cy="120" r="150" fill="url(#s1)"/>
+          <!-- the diff the agent made: files it read lit, files it should have read dim -->
+          <g fill="#FFFFFF" stroke="#E8E0D0">
+            <rect x="52" y="58" width="88" height="60" rx="7"/>
+            <rect x="52" y="132" width="88" height="60" rx="7"/>
+            <rect x="52" y="206" width="88" height="60" rx="7"/>
           </g>
-          <path d="M92 104c6-14 34-14 40 0" stroke="#E8E0D0" stroke-width="3" fill="none"/>
-          <!-- rim light from screen -->
-          <path d="M139 96c4 8 5 20 3 30" stroke="#0F766E" stroke-width="3" stroke-linecap="round" opacity=".75"/>
-          <path d="M136 214c10 12 16 34 17 60" stroke="#0F766E" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
-          <!-- spotter dot -->
-          <circle class="pulse" cx="352" cy="42" r="7" fill="#15A093"/>
-          <circle cx="352" cy="42" r="15" stroke="#0F766E" stroke-width="1.5" opacity=".4"/>
+          <g fill="#15A093" opacity=".85"><rect x="64" y="74" width="52" height="5" rx="2.5"/><rect x="64" y="87" width="64" height="5" rx="2.5"/><rect x="64" y="100" width="40" height="5" rx="2.5"/></g>
+          <g fill="#DCD3C0"><rect x="64" y="148" width="58" height="5" rx="2.5"/><rect x="64" y="161" width="44" height="5" rx="2.5"/><rect x="64" y="222" width="62" height="5" rx="2.5"/><rect x="64" y="235" width="38" height="5" rx="2.5"/></g>
+          <!-- unread callers, circled by the sweep -->
+          <g fill="#FFFFFF" stroke="#E8E0D0">
+            <rect x="256" y="88" width="96" height="64" rx="7"/>
+            <rect x="256" y="172" width="96" height="64" rx="7"/>
+          </g>
+          <g fill="#DCD3C0"><rect x="268" y="104" width="60" height="5" rx="2.5"/><rect x="268" y="117" width="72" height="5" rx="2.5"/><rect x="268" y="130" width="48" height="5" rx="2.5"/><rect x="268" y="188" width="66" height="5" rx="2.5"/><rect x="268" y="201" width="52" height="5" rx="2.5"/></g>
+          <g stroke="#0F766E" stroke-width="2" opacity=".6" stroke-dasharray="4 6" fill="none">
+            <path d="M140 88 Q 200 88 256 116"/><path d="M140 162 Q 200 176 256 200"/>
+          </g>
+          <g class="sweep" style="transform-origin:304px 164px"><circle cx="304" cy="164" r="112" fill="none" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="4 11" opacity=".5"/></g>
+          <circle class="pulse" cx="304" cy="120" r="8" fill="#15A093"/>
         </svg>
       </div>
       <div>
-        <p class="m-tag"><i></i>Reading code you didn't write</p>
-        <h3 class="serif">She designs the product. Today she opened the repo.</h3>
-        <p class="who">A designer at a four-person startup. The agent has been shipping for a week and she wants to understand what's underneath it — not to change it, just to stop nodding at words she doesn't know.</p>
+        <p class="m-tag"><i></i>Move one · The unread set</p>
+        <h3 class="serif">It reads what the agent skipped.</h3>
+        <p class="who">From the diff, Spotter works out which files the agent actually read — then computes the blast radius it ignored: the callers, the tests, the types, the configs, the docs that depend on what just changed. And reads them.</p>
         <div class="convo">
-          <div class="turn you"><span class="av you">YOU</span><p>What is this file even doing?</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><div>
-            <span class="tool">read_file</span>
-            <p>It's the door everything comes through. Every request hits this file first, and it checks one thing — are you who you say you are — before letting anything past. The three functions below are just three ways of asking that: a password, a token, a link from an email.</p>
-          </div></div>
-          <div class="turn you"><span class="av you">YOU</span><p>What's <em>interface</em> mean, at the top there?</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><p>A shape, not a thing. It says "anything calling itself a User must have these five fields" — so if the agent ever builds one missing an email, the compiler catches it before you ever run it. It's a promise the code makes to itself.</p></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2 -->
-    <div class="moment">
-      <div class="art">
-        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4EFE4"/><stop offset="1" stop-color="#F7F3EA"/></linearGradient>
-            <radialGradient id="s2" cx=".5" cy=".4"><stop offset="0" stop-color="#0F766E" stop-opacity=".42"/><stop offset="1" stop-color="#0F766E" stop-opacity="0"/></radialGradient>
-          </defs>
-          <rect width="400" height="300" fill="url(#g2)"/>
-          <circle cx="200" cy="120" r="150" fill="url(#s2)"/>
-          <!-- git graph as the artwork -->
-          <g stroke="#0F766E" stroke-width="2.5" fill="none" opacity=".95">
-            <path d="M80 240 L80 150 Q80 120 110 120 L170 120"/>
-            <path d="M80 150 Q80 96 130 96 L200 96 Q250 96 250 140 L250 190"/>
-            <path d="M170 120 Q250 120 250 165"/>
-          </g>
-          <g fill="#F7F3EA" stroke="#0F766E" stroke-width="2.5">
-            <circle cx="80" cy="240" r="9"/><circle cx="80" cy="188" r="9"/><circle cx="130" cy="96" r="9"/>
-            <circle cx="200" cy="96" r="9"/><circle cx="170" cy="120" r="9"/>
-          </g>
-          <circle class="pulse" cx="250" cy="190" r="12" fill="#0F766E"/>
-          <g fill="#DCD3C0"><rect x="292" y="88" width="72" height="5" rx="2.5"/><rect x="292" y="102" width="52" height="5" rx="2.5"/><rect x="292" y="116" width="64" height="5" rx="2.5"/></g>
-          <!-- figure silhouette, small, contemplating -->
-          <g fill="#F7F3EA"><ellipse cx="330" cy="215" rx="19" ry="21"/><path d="M296 300c0-38 16-64 34-64s34 26 34 64z"/></g>
-          <path d="M348 205c3 6 4 14 2 22" stroke="#0F766E" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-        </svg>
-      </div>
-      <div>
-        <p class="m-tag"><i></i>Git, finally</p>
-        <h3 class="serif">He's been copying commands off a sticky note for two years.</h3>
-        <p class="who">A self-taught developer who ships fine until git goes sideways. He knows the four commands that usually work and has no picture of what any of them do.</p>
-        <div class="convo">
-          <div class="turn you"><span class="av you">YOU</span><p>It says my branch and origin have diverged. I don't know what that means and I'm scared to type anything.</p></div>
+          <div class="turn you"><span class="av you">YOU</span><p>Spot check.</p></div>
           <div class="turn sp"><span class="av sp">◎</span><div>
             <span class="tool">git_summary</span>
-            <p>You both wrote. You made two commits here; someone pushed one to the server. Neither is wrong — they're just two versions of the story that split at the same point. Nothing is lost, and nothing is broken.</p>
+            <p>Nine files changed. Eight are the rename you asked for. The ninth rewrote the retry logic in the payments client — and it never opened the two files that call it.</p>
           </div></div>
-          <div class="turn you"><span class="av you">YOU</span><p>So what do I actually type?</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><p>Rebase. It takes your two commits off, replays theirs, then puts yours back on top — so the story reads in one line instead of a fork. <em>git pull --rebase</em>. If it stops and asks you about a file, that's a conflict, and I'll walk you through that one when we get there.</p></div>
         </div>
       </div>
     </div>
 
-    <!-- 3 -->
     <div class="moment">
-      <div class="art">
-        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDFBF7"/><stop offset="1" stop-color="#F7F3EA"/></linearGradient>
-            <radialGradient id="s3" cx=".5" cy=".3"><stop offset="0" stop-color="#15A093" stop-opacity=".34"/><stop offset="1" stop-color="#15A093" stop-opacity="0"/></radialGradient>
-          </defs>
-          <rect width="400" height="300" fill="url(#g3)"/>
-          <circle cx="200" cy="90" r="150" fill="url(#s3)"/>
-          <!-- terminal streaming -->
-          <rect x="46" y="46" width="308" height="176" rx="9" fill="#FFFFFF" stroke="#EFE8DA"/>
-          <g fill="#E8E0D0"><circle cx="63" cy="62" r="4"/><circle cx="77" cy="62" r="4"/><circle cx="91" cy="62" r="4"/></g>
-          <g fill="#15A093" opacity=".9"><rect x="62" y="84" width="8" height="5" rx="2"/><rect x="62" y="98" width="8" height="5" rx="2"/><rect x="62" y="112" width="8" height="5" rx="2"/><rect x="62" y="126" width="8" height="5" rx="2"/></g>
-          <g fill="#E2DACA"><rect x="78" y="84" width="152" height="5" rx="2.5"/><rect x="78" y="98" width="196" height="5" rx="2.5"/><rect x="78" y="112" width="122" height="5" rx="2.5"/><rect x="78" y="126" width="174" height="5" rx="2.5"/><rect x="78" y="140" width="98" height="5" rx="2.5"/><rect x="78" y="154" width="146" height="5" rx="2.5"/><rect x="78" y="168" width="112" height="5" rx="2.5"/></g>
-          <rect x="78" y="182" width="10" height="11" fill="#15A093" class="pulse"/>
-          <!-- watching eye/reticle over it -->
-          <g transform="translate(300,232)">
-            <circle r="26" fill="#F7F3EA" stroke="#0F766E" stroke-width="1.5" opacity=".55"/>
-            <g class="sweep"><circle r="34" fill="none" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="4 10" opacity=".55"/></g>
-            <circle class="pulse" r="9" fill="#15A093"/>
-          </g>
-          <g fill="#FDFBF7"><ellipse cx="76" cy="256" rx="16" ry="18"/><path d="M48 300c0-30 12-52 28-52s28 22 28 52z"/></g>
-        </svg>
-      </div>
-      <div>
-        <p class="m-tag"><i></i>Watching the agent work</p>
-        <h3 class="serif">She let it run for forty minutes. It touched nine files.</h3>
-        <p class="who">A backend engineer who uses an agent the way you'd use a very fast junior — productive, occasionally confident about the wrong thing. She wants to know what changed without reading nine diffs.</p>
-        <div class="convo">
-          <div class="turn you"><span class="av you">YOU</span><p>What did it just change?</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><div>
-            <span class="tool">git_summary</span>
-            <p>Nine files. Eight are the rename you asked for. The ninth isn't — it rewrote the retry logic in the payments client and dropped the backoff. You didn't ask for that.</p>
-          </div></div>
-          <div class="turn you"><span class="av you">YOU</span><p>Wait, show me.</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><p>Line 41. It was doubling the wait each attempt, capped at thirty seconds. Now it retries five times in a tight loop. Against a rate-limited API that turns one failure into five. Everything else in the diff is clean.</p></div>
-          <div class="turn you"><span class="av you">YOU</span><p>Tell it to put the backoff back.</p></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4 -->
-    <div class="moment">
-      <div class="art">
+      <div class="art" style="aspect-ratio:4/3">
         <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
           <defs>
             <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4EFE4"/><stop offset="1" stop-color="#F7F3EA"/></linearGradient>
@@ -401,7 +394,6 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
           </defs>
           <rect width="400" height="300" fill="url(#g4)"/>
           <circle cx="200" cy="140" r="150" fill="url(#s4)"/>
-          <!-- test grid: many pass, one fails -->
           <g>
             <g fill="#15A093" opacity=".82">
               <rect x="70" y="80" width="20" height="20" rx="5"/><rect x="100" y="80" width="20" height="20" rx="5"/><rect x="130" y="80" width="20" height="20" rx="5"/><rect x="160" y="80" width="20" height="20" rx="5"/><rect x="190" y="80" width="20" height="20" rx="5"/><rect x="220" y="80" width="20" height="20" rx="5"/><rect x="250" y="80" width="20" height="20" rx="5"/><rect x="280" y="80" width="20" height="20" rx="5"/>
@@ -418,61 +410,42 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
         </svg>
       </div>
       <div>
-        <p class="m-tag"><i></i>Testing what the agent built</p>
-        <h3 class="serif">"It says it's done." That's not the same as done.</h3>
-        <p class="who">A solo founder shipping to real customers. The agent always reports success. He needs someone who checks — every time, without being asked twice.</p>
+        <p class="m-tag"><i></i>Move two · The checks it skipped</p>
+        <h3 class="serif">"It says it's done." That's a claim, not a fact.</h3>
+        <p class="who">Spotter analyzes the change against what you actually asked for, your docs, and the decisions it remembers — then runs the checks the agent didn't: the full suite, the build, the type-check. Not the happy path. All of it.</p>
         <div class="convo">
-          <div class="turn you"><span class="av you">YOU</span><p>Run the tests.</p></div>
           <div class="turn sp"><span class="av sp">◎</span><div>
             <span class="tool">run_shell_command</span>
-            <p>Twenty-three pass, one fails — the checkout timeout test, three seconds over.</p>
-          </div></div>
-          <div class="turn you"><span class="av you">YOU</span><p>Is that the test or my code?</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><div>
-            <span class="tool">read_file</span>
-            <p>Your code. The test allows five seconds and always did. The agent added a second database call inside the loop, so it's making one query per item instead of one for all of them. Eleven items today, eleven queries. It'll get worse with real carts, not better.</p>
+            <p>The full suite disagrees with the agent: twenty-three pass, one fails — the checkout timeout test. It dropped the backoff, so one failure against that rate-limited API becomes five retries in a tight loop. You asked for a rename. This wasn't that.</p>
           </div></div>
         </div>
       </div>
     </div>
 
-    <!-- 5 -->
     <div class="moment">
-      <div class="art">
-        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4EFE4"/><stop offset="1" stop-color="#F7F3EA"/></linearGradient>
-            <radialGradient id="s5" cx=".3" cy=".5"><stop offset="0" stop-color="#6F757B" stop-opacity=".36"/><stop offset="1" stop-color="#6F757B" stop-opacity="0"/></radialGradient>
-          </defs>
-          <rect width="400" height="300" fill="url(#g5)"/>
-          <circle cx="130" cy="150" r="150" fill="url(#s5)"/>
-          <!-- lone desk lamp glow, late night -->
-          <path d="M40 300 L74 122 L106 122 L140 300Z" fill="#6F757B" opacity=".07"/>
-          <rect x="60" y="106" width="60" height="16" rx="7" fill="#EFE8DA"/>
-          <circle class="pulse" cx="90" cy="122" r="6" fill="#6F757B"/>
-          <!-- stack trace -->
-          <g fill="#DCD3C0"><rect x="176" y="96" width="150" height="5" rx="2.5"/><rect x="186" y="110" width="128" height="5" rx="2.5"/><rect x="186" y="124" width="140" height="5" rx="2.5"/><rect x="186" y="138" width="104" height="5" rx="2.5"/><rect x="186" y="152" width="132" height="5" rx="2.5"/></g>
-          <rect x="176" y="82" width="112" height="5" rx="2.5" fill="#6F757B"/>
-          <rect x="186" y="124" width="140" height="5" rx="2.5" fill="#0F766E" opacity=".9"/>
-          <!-- figure head in hands -->
-          <g fill="#F7F3EA"><ellipse cx="96" cy="216" rx="21" ry="23"/><path d="M58 300c0-40 17-68 38-68s38 28 38 68z"/></g>
-          <path d="M115 206c3 7 4 16 2 25" stroke="#6F757B" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
-          <g transform="translate(330,236)"><circle class="pulse" r="8" fill="#15A093"/><circle r="17" fill="none" stroke="#0F766E" stroke-width="1.5" opacity=".4"/></g>
-        </svg>
+      <div class="art" style="display:flex;align-items:center;padding:22px;background:linear-gradient(180deg,#F4EFE4,#F7F3EA)">
+        <div class="spec" style="margin-top:0;width:100%">
+          <div class="spec-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V2h6v2"/></svg>
+            On your clipboard
+          </div>
+          <pre>You changed <b>retry()</b> in <b>payments/client.ts:41</b> but read
+none of its callers. Read <b>checkout/worker.ts:118</b> and the
+contract test at <b>tests/payments.spec.ts:60</b>. Restore the
+exponential backoff — it is load-bearing for a rate-limited
+API — keep your five-attempt cap, and add a test that fails
+if backoff is ever dropped again. Then run the FULL suite:
+worker.ts imports the type you narrowed.</pre>
+        </div>
       </div>
       <div>
-        <p class="m-tag"><i></i>The error at one in the morning</p>
-        <h3 class="serif">Forty lines of red. None of them say what's wrong.</h3>
-        <p class="who">A student two weeks into her first real project, at the point most people quit — where the error is long, the internet's answers don't match, and there's nobody awake to ask.</p>
+        <p class="m-tag"><i></i>Move three · The forcing prompt</p>
+        <h3 class="serif">The fix is one paste away.</h3>
+        <p class="who">Spotter writes the prompt that forces your agent to do it right — naming the files it must read, the checks it must run, the thing it must not drop again. It lands on your clipboard; she tells you why in one line. Paste it, or say "just fix it" and Spotter applies its own prompt with its own hands.</p>
         <div class="convo">
-          <div class="turn you"><span class="av you">YOU</span><p>I don't even know how to read this.</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><div>
-            <span class="tool">deep_read_screen</span>
-            <p>Start at the bottom — that's where it actually broke. Everything above is just how it got there. The bottom line says <em>cannot read 'name' of undefined</em>, in your profile component, line 24.</p>
-          </div></div>
-          <div class="turn you"><span class="av you">YOU</span><p>But the user definitely exists.</p></div>
-          <div class="turn sp"><span class="av sp">◎</span><p>It does — half a second later than you're asking. The page draws before the fetch comes back, so on that first pass there's nothing there yet. It's not wrong, it's early. You want line 24 to say "if we have a user, draw the name" — and the whole error goes away.</p></div>
-          <div class="turn you"><span class="av you">YOU</span><p>…that worked.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>Forcing prompt's on your clipboard — it makes the agent read the two callers it skipped and put the backoff back with a test to hold it.</p></div>
+          <div class="turn you"><span class="av you">YOU</span><p>Just fix it.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>On it. Anything destructive, I'll read back to you first.</p></div>
         </div>
       </div>
     </div>
@@ -483,19 +456,121 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
 
 <section>
   <div class="wrap">
-    <p class="kicker">What it can do</p>
-    <h2 class="serif">Four things, done well.</h2>
-    <p class="sec-lede">Every one of them is a switch in your panel. Turn one off and it's genuinely off — Spotter isn't told the tool exists.</p>
+    <p class="kicker">The steward</p>
+    <h2 class="serif">Your docs, kept true.</h2>
+    <p class="sec-lede">Documentation isn't a chore Spotter nags you about — it's an asset Spotter owns. It knows what your docs claim, notices when a change just made a claim false, and writes the missing ones with you.</p>
+    <div class="moment" style="border-top:0;padding-top:44px">
+      <div class="art" style="aspect-ratio:4/3">
+        <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="g6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDFBF7"/><stop offset="1" stop-color="#F7F3EA"/></linearGradient>
+            <radialGradient id="s6" cx=".4" cy=".4"><stop offset="0" stop-color="#15A093" stop-opacity=".3"/><stop offset="1" stop-color="#15A093" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#g6)"/>
+          <circle cx="160" cy="120" r="150" fill="url(#s6)"/>
+          <!-- doc pages, one flagged stale -->
+          <g fill="#FFFFFF" stroke="#E8E0D0">
+            <rect x="60" y="60" width="110" height="140" rx="8"/>
+            <rect x="200" y="84" width="110" height="140" rx="8" transform="rotate(3 255 154)"/>
+          </g>
+          <g fill="#DCD3C0">
+            <rect x="74" y="78" width="70" height="5" rx="2.5"/><rect x="74" y="92" width="82" height="5" rx="2.5"/>
+            <rect x="74" y="106" width="58" height="5" rx="2.5"/><rect x="74" y="120" width="76" height="5" rx="2.5"/>
+            <rect x="74" y="134" width="64" height="5" rx="2.5"/>
+          </g>
+          <rect x="74" y="120" width="76" height="5" rx="2.5" fill="#0A4F4A" opacity=".8"/>
+          <g fill="#DCD3C0">
+            <rect x="216" y="104" width="70" height="5" rx="2.5" transform="rotate(3 255 154)"/>
+            <rect x="216" y="118" width="80" height="5" rx="2.5" transform="rotate(3 255 154)"/>
+            <rect x="216" y="132" width="54" height="5" rx="2.5" transform="rotate(3 255 154)"/>
+          </g>
+          <circle class="pulse" cx="160" cy="122" r="8" fill="#0A4F4A"/>
+          <g transform="translate(330,60)"><circle class="pulse" r="8" fill="#15A093"/><circle r="17" fill="none" stroke="#0F766E" stroke-width="1.5" opacity=".4"/></g>
+        </svg>
+      </div>
+      <div>
+        <p class="m-tag"><i></i>Inspect · Flag · Offer to write</p>
+        <h3 class="serif">"The README stopped being true at 2:14."</h3>
+        <p class="who">Every change the agent lands is checked against what the docs say. Stale claims get named the moment they go stale — and gaps get an offer, not a guilt trip.</p>
+        <div class="convo">
+          <div class="turn sp"><span class="av sp">◎</span><p>That change broke a promise your README makes — the setup section still says the old env var. Also, the deploy runbook you've never written? I'll ask you five questions and draft it.</p></div>
+          <div class="turn you"><span class="av you">YOU</span><p>Go.</p></div>
+          <div class="turn sp"><span class="av sp">◎</span><p>First: when a deploy goes bad, what's the very first thing you check? I'll show you the draft as a diff — nothing lands until you say yes.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The overseer</p>
+    <h2 class="serif">Every repo. Every agent.<br>One ledger.</h2>
+    <p class="sec-lede">You don't run one agent in one repo anymore. Spotter keeps the ledger: which repos are active, which agent holds which one, what's in flight, and what all of it costs — tokens by day, by repo, by model, including Spotter's own spend. The honest denominator.</p>
+    <div class="cards">
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M3 7h18M3 12h18M3 17h18"/><circle cx="7" cy="7" r="1.6" fill="#0F766E"/><circle cx="12" cy="12" r="1.6" fill="#0F766E"/><circle cx="7" cy="17" r="1.6" fill="#0F766E"/></svg>
+        <h4>The repo ledger</h4>
+        <p>Every active repo, its branch, its agent, what's in flight — one push away from the menu bar. Memory stays separate per repo, so projects never bleed into each other.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>
+        <h4>The cross-repo digest</h4>
+        <p>A morning sentence instead of an evening archaeology dig: what moved in each repo, what stalled, what the agents did while you slept.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>
+        <h4>The spend report</h4>
+        <p>Tokens × day × repo × model — both your agents' spend and Spotter's own. When the cost per shipped change drifts, you hear about it before the invoice does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="proof">
+  <div class="wrap">
+    <p class="kicker">The proof</p>
+    <h2 class="serif">10× is a number here,<br>not a slogan.</h2>
+    <p class="sec-lede">Before the review ever speaks, it runs silently for two weeks — logging what it would have caught. That shadow log is the baseline. Then the scoreboard runs against it, on your own git history, computed on your own Mac.</p>
+    <div class="nums">
+      <div class="num">
+        <p class="n-name">Gaps caught before merge</p>
+        <p>Counted only when the next diff touches the exact file and line a review named. Not "insights delivered." Catches that changed what shipped.</p>
+      </div>
+      <div class="num">
+        <p class="n-name">Rework avoided</p>
+        <p>The shadow log's misses, correlated with the fix-commits they would have prevented. The counterfactual, measured instead of asserted.</p>
+      </div>
+      <div class="num">
+        <p class="n-name">Cost per shipped change</p>
+        <p>Every token both agents spent, divided by what actually merged. If Spotter doesn't pay for itself on this line, you'll see that too.</p>
+      </div>
+    </div>
+    <p class="proof-note"><b>Nothing leaves your Mac to make these numbers.</b> No telemetry, no dashboard in someone else's cloud — the proof is computed locally from your own history, and it's allowed to embarrass us.</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The machine underneath</p>
+    <h2 class="serif">Four hands, one voice.</h2>
+    <p class="sec-lede">Every capability is a switch in your panel. Turn one off and it's genuinely off — Spotter isn't told the tool exists.</p>
     <div class="cards">
       <div class="card">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><circle cx="12" cy="12" r="3.2"/><path d="M1.8 12S5 5.5 12 5.5 22.2 12 22.2 12 19 18.5 12 18.5 1.8 12 1.8 12Z"/></svg>
         <h4>Watch the screen</h4>
-        <p>Reads your terminal, your editor, an error too small to squint at. Can keep an eye on one window and speak up the moment a build finishes or a test goes red.</p>
+        <p>Reads your terminal, your editor, an error too small to squint at. Keeps an eye on one window and speaks the moment a build finishes or a test goes red.</p>
       </div>
       <div class="card">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M4 4h9l7 7v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M13 4v7h7"/></svg>
         <h4>Read your project</h4>
-        <p>Opens files, searches the codebase, and reads the git history — so "what changed" is answered from the diff, not from a guess.</p>
+        <p>Opens files, searches the codebase, reads the git history — so "what changed" is answered from the diff, not from a guess.</p>
       </div>
       <div class="card">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
@@ -505,7 +580,7 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
       <div class="card">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="1.6"><path d="M12 3a4 4 0 0 1 4 4v1a3 3 0 0 1 0 6v3a4 4 0 0 1-8 0v-3a3 3 0 0 1 0-6V7a4 4 0 0 1 4-4Z"/></svg>
         <h4>Remember the project</h4>
-        <p>The decisions you made, the conventions you hold, what you were in the middle of. You don't re-explain your project every morning.</p>
+        <p>The decisions you made, the conventions you hold, every correction you've ever given your agent. You don't re-explain your project every morning.</p>
       </div>
     </div>
 
@@ -529,20 +604,20 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
     <h2 class="serif">What it is, and what it isn't.</h2>
     <div class="plain">
       <div>
-        <h4>It doesn't write your code</h4>
-        <p>Your agent does that. Spotter watches, checks, and explains. It can edit and commit when you ask it to — but that's not what it's for.</p>
+        <h4>It doesn't write your features</h4>
+        <p>Your agent does that. Spotter catches what the agent structurally can't see. When you say "just fix it," Spotter applies its own review with its own hands — and anything destructive gets read back to you first, every time, no setting turns that off.</p>
       </div>
       <div>
         <h4>You hold every switch</h4>
-        <p>Watching, reading, running, typing for you — each is a toggle, and typing is off until you turn it on. A capability that's off isn't offered to the model at all.</p>
+        <p>Watching, reading, running, typing for you — each is a toggle, and a capability that's off isn't offered to the model at all. Watching your screen stays "only when asked."</p>
       </div>
       <div>
         <h4>Memory stays on your Mac</h4>
-        <p>What it learns about your project is stored in a local database you can open and delete. To index a screenshot it captures, it sends that image to Google's vision model — that part isn't local, and you can switch memory off entirely.</p>
+        <p>What it learns lives in a local database you can open, export, and delete. One asterisk, stated plainly: indexing a screenshot sends that image to Google's vision model. You can switch memory off entirely — and the all-local road is the one we're paving.</p>
       </div>
       <div>
-        <h4>It's early</h4>
-        <p>Version 0.8.6, Apple silicon only, signed and notarized. Free to start. It will get things wrong, and it's built to tell you when it doesn't know.</p>
+        <h4>The multiplier is measured</h4>
+        <p>Free to start, your own keys always unmetered, and the 10× claim runs against a shadow baseline on your own machine. It's early — v0.8.6, Apple silicon, signed and notarized — and it's built to tell you when it doesn't know.</p>
       </div>
     </div>
   </div>
@@ -588,8 +663,8 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
 <section class="final" id="get">
   <div class="halo"></div>
   <div class="wrap">
-    <h2 class="serif" style="font-size:clamp(2.2rem,5.2vw,3.5rem)">Nobody should build alone<br>with something they can't read.</h2>
-    <p class="lede" style="margin-top:24px">Put a spotter beside you.</p>
+    <h2 class="serif" style="font-size:clamp(2.2rem,5.2vw,3.5rem)">Your agent is fast.<br>Make it right.</h2>
+    <p class="lede" style="margin-top:24px">One agent writing alone is a coin flip you read about in the postmortem.<br>Put a counter-agent beside it.</p>
     <div class="cta-row">
       <a class="btn btn-p" href="https://github.com/richie-iris/iris-site/releases/download/v0.8.6/Spotter-0.8.6-arm64.dmg">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4l-4.7-5.7 1.4-1.4 3.3 3.3V3z"/><path d="M4 19h16v2H4z"/></svg>
@@ -601,8 +676,8 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
 </section>
 
 <footer><div class="wrap foot-in">
-  <span>Spotter — the voice that watches while you build.</span>
-  <span>Made for people building with agents.</span>
+  <span>Spotter — the counter-agent.</span>
+  <span>The agent writes. Spotter catches.</span>
 </div></footer>
 
 <script>
