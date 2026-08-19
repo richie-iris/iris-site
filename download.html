@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Downloading Spotter — The Counter-Agent for macOS</title>
+<meta name="description" content="Download Spotter for Mac. The voice that watches your coding agent.">
+<link rel="icon" href="assets/favicon.png">
+<meta http-equiv="refresh" content="1; url=https://github.com/richie-iris/iris-site/releases/download/v0.10.2/Spotter-0.10.2-arm64.dmg">
+<style>
+:root{
+  --cream:#F7F3EA; --cream2:#F0EADC; --paper:#FFFFFF; --line:#E2DACA;
+  --ink:#2A2E33; --fg:#3A3F45; --mut:#6F757B; --dim:#9AA0A6;
+  --tl:#0F766E; --tl-b:#15A093; --tl-d:#0A4F4A; --tl-pale:#E3F1EF;
+  --max:980px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--cream); color:var(--fg);
+  font:400 17px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+  -webkit-font-smoothing:antialiased; min-height:100svh; display:flex; flex-direction:column;
+}
+.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px;width:100%}
+a{color:inherit}
+
+header{position:relative;overflow:hidden;padding:clamp(60px,10vh,110px) 0 40px;text-align:center}
+.halo{position:absolute;left:50%;top:-15%;width:900px;height:900px;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(15,118,110,.18) 0%,rgba(15,118,110,.05) 35%,transparent 70%);
+  pointer-events:none;z-index:0}
+.reticle{width:76px;height:76px;margin:0 auto 28px;display:block}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tl);font-weight:600;margin-bottom:14px}
+h1{font-size:clamp(2.4rem,5.5vw,3.8rem);line-height:1.08;letter-spacing:-.03em;color:var(--ink);font-weight:400}
+h1 em{font-style:normal;color:var(--tl)}
+.lede{max-width:580px;margin:18px auto 0;font-size:1.15rem;color:var(--mut)}
+
+.cta-box{margin:36px auto 0;background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:32px 28px;max-width:560px;box-shadow:0 12px 36px rgba(42,46,51,.04);text-align:center}
+.status-pill{display:inline-flex;align-items:center;gap:8px;background:var(--tl-pale);color:var(--tl-d);
+  font-size:.88rem;font-weight:600;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--tl);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.2)}}
+
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;
+  padding:14px 28px;border-radius:999px;font-size:1rem;transition:all .2s;cursor:pointer}
+.btn-p{background:var(--tl);color:#FFFFFF;box-shadow:0 8px 24px rgba(15,118,110,.25);border:none}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(15,118,110,.35)}
+
+.manual-link{display:block;margin-top:16px;font-size:.9rem;color:var(--mut);text-decoration:none}
+.manual-link:hover{color:var(--tl);text-decoration:underline}
+
+.steps-wrap{margin:48px auto 60px;max-width:820px}
+.steps-title{text-align:center;font-size:1.4rem;color:var(--ink);margin-bottom:28px}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.step-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px;position:relative}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;
+  background:var(--cream2);color:var(--tl);font-weight:700;font-size:.85rem;margin-bottom:12px}
+.step-card h3{font-size:1.05rem;color:var(--ink);margin-bottom:6px}
+.step-card p{font-size:.9rem;color:var(--mut);line-height:1.5}
+
+footer{margin-top:auto;border-top:1px solid var(--line);padding:24px 0;text-align:center;font-size:.88rem;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="halo"></div>
+  <div class="wrap">
+    <svg class="reticle" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="core" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#15A093"/><stop offset="100%" stop-color="#0F766E"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="90" stroke="#0F766E" stroke-width="2" stroke-opacity=".35"/>
+      <circle cx="100" cy="100" r="70" stroke="#0F766E" stroke-width="2" stroke-dasharray="4 6" stroke-opacity=".55"/>
+      <circle cx="100" cy="100" r="18" fill="url(#core)"/>
+    </svg>
+
+    <p class="eyebrow">Spotter for macOS</p>
+    <h1 class="serif">Your download is <em>starting.</em></h1>
+    <p class="lede">The voice that watches your coding agent is on its way.</p>
+
+    <div class="cta-box">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span>Downloading Spotter-0.10.2-arm64.dmg</span>
+      </div>
+      <p style="font-size:.95rem;color:var(--fg);margin-bottom:18px">If your download didn't begin automatically:</p>
+      <a id="dl-btn" class="btn btn-p" href="https://github.com/richie-iris/iris-site/releases/download/v0.10.2/Spotter-0.10.2-arm64.dmg">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4l-4.7-5.7 1.4-1.4 3.3 3.3V3z"/><path d="M4 19h16v2H4z"/></svg>
+        Click to Download Manually
+      </a>
+      <a class="manual-link" href="/">← Return to spotter.etwaru.ai</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap steps-wrap">
+  <h2 class="serif steps-title">Three steps to get running</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <span class="step-num">1</span>
+      <h3>Open the DMG</h3>
+      <p>Double-click <code>Spotter-0.10.2-arm64.dmg</code> in your Downloads folder once it finishes.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">2</span>
+      <h3>Drag to Applications</h3>
+      <p>Drag the Spotter icon into your Applications folder in the window that opens.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">3</span>
+      <h3>Open from Menu Bar</h3>
+      <p>Launch Spotter from Applications or Spotlight. It sits in your menu bar, ready to spot.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Spotter — the counter-agent · macOS, Apple silicon · signed &amp; notarized v0.10.2</span>
+  </div>
+</footer>
+
+<script>
+  // Automatic trigger
+  const DMG_URL = "https://github.com/richie-iris/iris-site/releases/download/v0.10.2/Spotter-0.10.2-arm64.dmg";
+  setTimeout(() => {
+    window.location.href = DMG_URL;
+  }, 200);
+</script>
+</body>
+</html>
