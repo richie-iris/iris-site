@@ -11,8 +11,6 @@
 <meta property="og:image" content="assets/spotter.png">
 <style>
 :root{
-  /* Three colours and white. Cream is the page, grey is the voice,
-     teal is the only accent, white lifts a panel off the cream. */
   --cream:#F7F3EA; --cream2:#F0EADC; --paper:#FFFFFF; --line:#E2DACA;
   --ink:#2A2E33; --fg:#3A3F45; --mut:#6F757B; --dim:#9AA0A6;
   --tl:#0F766E; --tl-b:#15A093; --tl-d:#0A4F4A; --tl-pale:#E3F1EF;
@@ -30,12 +28,6 @@ body{
 a{color:inherit}
 img{max-width:100%;display:block}
 
-/* ---------- hero ---------- */
-/* The hero is measured against the window, not against a number. Fixed padding
-   made it 962px tall in a 900px viewport, so the version line under the buttons
-   fell below the fold on an ordinary laptop. min-height + centring pins it to
-   one screen; the vh terms in the rhythm below let it compress on short windows
-   instead of overflowing them. */
 header{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;
   padding:clamp(88px,13vh,150px) 0 clamp(44px,7vh,92px)}
 .halo{position:absolute;left:50%;top:-8%;width:1150px;height:1150px;transform:translateX(-50%);
@@ -62,14 +54,12 @@ h1 em{font-style:normal;color:var(--tl);position:relative;white-space:nowrap}
 .meta{margin-top:17px;font-size:.83rem;color:var(--mut)}
 .meta b{color:var(--fg);font-weight:600}
 
-/* ---------- section furniture ---------- */
 section{position:relative;padding:112px 0}
 .kicker{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tl);font-weight:600;margin-bottom:16px}
 h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;font-weight:400;color:var(--ink)}
 .sec-lede{max-width:600px;margin-top:20px;color:var(--mut);font-size:1.06rem}
 .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
 
-/* ---------- the idea ---------- */
 .idea{max-width:800px;margin:0 auto;text-align:center}
 .idea .big{font-size:clamp(1.5rem,3.4vw,2.15rem);line-height:1.42;letter-spacing:-.02em;font-weight:400}
 .idea .big span{color:var(--tl)}
@@ -79,7 +69,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .mathline b{font-weight:400;color:var(--tl);font-size:clamp(1.9rem,4.4vw,2.9rem)}
 .mathline s{text-decoration:line-through;color:var(--dim);font-size:.8em}
 
-/* ---------- weakness map ---------- */
 .fams{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:52px}
 .fam{border:1px solid var(--line);border-radius:15px;background:var(--paper);padding:26px 24px}
 .fam h4{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
@@ -90,7 +79,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .wk b{font-weight:600;font-size:.93rem;color:var(--ink)}
 .wk p{margin-top:4px;font-size:.86rem;color:var(--mut);line-height:1.55}
 
-/* ---------- moments / moves ---------- */
 .moment{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center;padding:74px 0;border-top:1px solid var(--line)}
 .moment:first-of-type{border-top:0}
 .moment:nth-child(even) .art{order:2}
@@ -102,7 +90,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .moment h3{font-size:clamp(1.5rem,3vw,2.05rem);line-height:1.2;letter-spacing:-.025em;font-weight:400;margin-bottom:15px}
 .moment .who{color:var(--mut);font-size:.95rem;margin-bottom:26px;line-height:1.6}
 
-/* conversation */
 .convo{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,rgba(42,46,51,.030),transparent);padding:8px}
 .turn{display:flex;gap:12px;padding:12px 13px;align-items:flex-start}
 .turn+.turn{border-top:1px solid rgba(42,46,51,.055)}
@@ -117,7 +104,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
   font-size:.75rem;color:var(--tl);background:rgba(15,118,110,.08);border:1px solid rgba(15,118,110,.2);
   padding:2px 8px;border-radius:5px;margin-bottom:7px}
 
-/* forcing-prompt specimen */
 .spec{border:1px solid rgba(15,118,110,.35);border-radius:14px;background:var(--paper);overflow:hidden;margin-top:26px}
 .spec-bar{display:flex;align-items:center;gap:9px;padding:10px 16px;border-bottom:1px solid var(--line);
   font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--tl)}
@@ -126,7 +112,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
   color:var(--fg);white-space:pre-wrap;word-break:break-word}
 .spec pre b{color:var(--tl);font-weight:600}
 
-/* ---------- capability cards ---------- */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:18px;margin-top:52px}
 .card{border:1px solid var(--line);border-radius:15px;padding:28px 24px;background:linear-gradient(180deg,rgba(42,46,51,.028),transparent);
   transition:border-color .25s,transform .25s}
@@ -135,7 +120,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .card h4{font-size:1.05rem;font-weight:600;margin-bottom:9px;letter-spacing:-.01em}
 .card p{color:var(--mut);font-size:.93rem;line-height:1.6}
 
-/* ---------- proof numbers ---------- */
 .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:52px}
 .num{border:1px solid var(--line);border-radius:15px;padding:28px 24px;background:var(--paper)}
 .num .n-name{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);margin-bottom:9px}
@@ -143,19 +127,16 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
 .proof-note{margin-top:34px;text-align:center;color:var(--mut);font-size:.95rem;max-width:640px;margin-left:auto;margin-right:auto}
 .proof-note b{color:var(--fg);font-weight:600}
 
-/* ---------- states strip ---------- */
 .states{display:flex;gap:14px;flex-wrap:wrap;margin-top:44px;justify-content:center}
 .state{text-align:center;opacity:.9}
 .state img{width:62px;height:auto;margin:0 auto 9px;border-radius:8px}
 .state span{font-size:.72rem;color:var(--mut);letter-spacing:.05em}
 
-/* ---------- honesty ---------- */
 .plain{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;margin-top:46px}
 .plain div{border-left:2px solid var(--line);padding-left:20px}
 .plain h4{font-size:.98rem;font-weight:600;margin-bottom:8px}
 .plain p{color:var(--mut);font-size:.92rem;line-height:1.62}
 
-/* ---------- founders ---------- */
 #founders h2 em{font-style:normal;color:var(--tl)}
 .founders-shot{margin:46px 0 0;border-radius:20px;overflow:hidden;border:1px solid var(--line);
   background:var(--paper);box-shadow:0 18px 50px rgba(42,46,51,.09)}
@@ -168,7 +149,6 @@ h2{font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.13;letter-spacing:-.03em;fo
   color:var(--tl);font-weight:600;margin:7px 0 12px}
 .founders p{color:var(--mut);font-size:.93rem;line-height:1.6}
 
-/* ---------- final ---------- */
 .final{text-align:center;padding:126px 0 118px;position:relative;overflow:hidden}
 .final .halo{top:-30%;opacity:.75}
 .final .wrap{position:relative;z-index:1}
@@ -181,10 +161,6 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
   .moment{grid-template-columns:1fr;gap:34px;padding:56px 0}
   .moment:nth-child(even) .art{order:0}
 }
-/* Phones. The hero costs 56px more than it has here: the eyebrow wraps to two
-   lines, the lede runs to six, and the buttons stack. Tightening those three
-   buys back more than the overflow, so the version line stays above the fold
-   on a 812px phone instead of being clipped by it. */
 @media(max-width:520px){
   header{padding:clamp(74px,9vh,104px) 0 clamp(28px,4vh,52px)}
   .eyebrow{font-size:.7rem;letter-spacing:.14em;margin-bottom:clamp(10px,1.8vh,18px)}
@@ -323,7 +299,6 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
           </defs>
           <rect width="400" height="300" fill="url(#g1)"/>
           <circle cx="200" cy="120" r="150" fill="url(#s1)"/>
-          <!-- the diff the agent made: files it read lit, files it should have read dim -->
           <g fill="#FFFFFF" stroke="#E8E0D0">
             <rect x="52" y="58" width="88" height="60" rx="7"/>
             <rect x="52" y="132" width="88" height="60" rx="7"/>
@@ -331,7 +306,6 @@ footer{border-top:1px solid var(--line);padding:38px 0;font-size:.85rem;color:va
           </g>
           <g fill="#15A093" opacity=".85"><rect x="64" y="74" width="52" height="5" rx="2.5"/><rect x="64" y="87" width="64" height="5" rx="2.5"/><rect x="64" y="100" width="40" height="5" rx="2.5"/></g>
           <g fill="#DCD3C0"><rect x="64" y="148" width="58" height="5" rx="2.5"/><rect x="64" y="161" width="44" height="5" rx="2.5"/><rect x="64" y="222" width="62" height="5" rx="2.5"/><rect x="64" y="235" width="38" height="5" rx="2.5"/></g>
-          <!-- unread callers, circled by the sweep -->
           <g fill="#FFFFFF" stroke="#E8E0D0">
             <rect x="256" y="88" width="96" height="64" rx="7"/>
             <rect x="256" y="172" width="96" height="64" rx="7"/>
@@ -441,7 +415,6 @@ worker.ts imports the type you narrowed.</pre>
           </defs>
           <rect width="400" height="300" fill="url(#g6)"/>
           <circle cx="160" cy="120" r="150" fill="url(#s6)"/>
-          <!-- doc pages, one flagged stale -->
           <g fill="#FFFFFF" stroke="#E8E0D0">
             <rect x="60" y="60" width="110" height="140" rx="8"/>
             <rect x="200" y="84" width="110" height="140" rx="8" transform="rotate(3 255 154)"/>
